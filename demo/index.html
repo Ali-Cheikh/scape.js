@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Dynamic Background</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script src="config.js"></script>
+</head>
+
+<body class="bg-gray-900 min-h-screen flex flex-col items-center justify-center gap-6">
+  <h1 class="text-4xl font-bold text-white p-8">try clicking some buttons</h1>
+
+  <div class="flex flex-wrap gap-4 p-4">
+    <button onclick="ScapeJs.refresh();ScapeJs.updateConfig(backgroundConfig)"
+      class="bg-white px-4 py-2 rounded-lg shadow-md hover:bg-gray-100 transition-colors w-full sm:w-auto">
+      Refresh Background
+    </button>
+
+    <button onclick="ScapeJs.updateConfig({ shape: 'triangle', fillColor: 'gray', strokeColor: 'black', strokeWidth: 1 })" 
+      class="bg-yellow-500 px-4 py-2 rounded-lg shadow-md hover:bg-yellow-200 transition-colors w-full sm:w-auto">
+      Change to Triangles
+    </button>
+
+    <button onclick="ScapeJs.destroy()"
+      class="bg-red-500 text-white px-4 py-2 rounded-lg shadow-md hover:bg-red-600 transition-colors w-full sm:w-auto">
+      Remove Background
+    </button>
+  </div>
+
+  <script src="demo.js"></script>
+</body>
+
+</html>
