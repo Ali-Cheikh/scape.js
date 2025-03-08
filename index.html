@@ -137,14 +137,15 @@ window.ScapeConfig = {
 
     <!-- Configuration Options -->
     <section class="container mx-auto px-6 lg:px-0 py-16 fade-in">
+        <br><br><br>
         <h2 class="text-4xl font-bold mb-8">Configuration Options</h2>
         <p class="text-lg text-gray-300 leading-relaxed">
             Customize the background to fit your needs:
         </p>
-        <div class="mt-8 lg:mt-0 overflow-x-auto">
+        <div class="mt-8 lg:mt-0 overflow-x-auto fade-in">
             <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
               <!-- Table for Shape Configuration -->
-              <table class="bg-gray-800 rounded-lg overflow-scroll">
+              <table class="bg-gray-800 rounded-lg overflow-scroll fade-in">
                 <thead>
                     <th class="px-2 sm:px-4 py-3" colspan="2">Shapes config tools</th>
                   <tr class="bg-gray-700">
@@ -159,7 +160,7 @@ window.ScapeConfig = {
                   </tr>
                   <tr class="border-b border-gray-700">
                     <td class="px-2 sm:px-4 py-4 text-sm sm:text-base">shape</td>
-                    <td class="px-2 sm:px-4 py-4 text-sm sm:text-base">Choose from circle, square, hexagon, heart, diamond, star, triangle, or pentagon.</td>
+                    <td class="px-2 sm:px-4 py-4 text-sm sm:text-base">Choose from circle, hexagon, heart, diamond, star, triangle, or pentagon.</td>
                   </tr>
                   <tr class="border-b border-gray-700">
                     <td class="px-2 sm:px-4 py-4 text-sm sm:text-base">count</td>
@@ -190,10 +191,6 @@ window.ScapeConfig = {
                     <td class="px-2 sm:px-4 py-4 text-sm sm:text-base">Maximum rotation in degrees.</td>
                   </tr>
                   <tr class="border-b border-gray-700">
-                    <td class="px-2 sm:px-4 py-4 text-sm sm:text-base">hoverScale</td>
-                    <td class="px-2 sm:px-4 py-4 text-sm sm:text-base">Scale on hover.</td>
-                  </tr>
-                  <tr class="border-b border-gray-700">
                     <td class="px-2 sm:px-4 py-4 text-sm sm:text-base">opacity</td>
                     <td class="px-2 sm:px-4 py-4 text-sm sm:text-base">Base opacity for elements.</td>
                   </tr>
@@ -213,7 +210,7 @@ window.ScapeConfig = {
               </table>
               
               <!-- Table for Image Configuration -->
-              <table class=" bg-gray-800 rounded-lg overflow-scroll">
+              <table class="bg-gray-800 rounded-lg overflow-scroll fade-in">
                 <thead>
                     <th class="px-2 sm:px-4 py-3" colspan="2">Images config tools</th>
                   <tr class="bg-gray-700">
@@ -259,10 +256,6 @@ window.ScapeConfig = {
                     <td class="px-2 sm:px-4 py-4 text-sm sm:text-base">Maximum rotation in degrees.</td>
                   </tr>
                   <tr class="border-b border-gray-700">
-                    <td class="px-2 sm:px-4 py-4 text-sm sm:text-base">hoverScale</td>
-                    <td class="px-2 sm:px-4 py-4 text-sm sm:text-base">Scale on hover.</td>
-                  </tr>
-                  <tr class="border-b border-gray-700">
                     <td class="px-2 sm:px-4 py-4 text-sm sm:text-base">opacity</td>
                     <td class="px-2 sm:px-4 py-4 text-sm sm:text-base">Base opacity for elements.</td>
                   </tr>
@@ -272,7 +265,6 @@ window.ScapeConfig = {
               <hr>
         </div>
     </section>
-
     <!-- Live Demo -->
     <section class="container mx-auto px-6 py-16 fade-in">
         <h2 class="text-4xl font-bold mb-8">Live Demo</h2>
@@ -331,7 +323,7 @@ window.ScapeConfig = {
         fadeElements.forEach((element) => observer.observe(element));
     </script>
 
-    <script src="https://github.com/Ali-Cheikh/scape.js/scape.js"></script>
+    <script src="scape.js"></script>
 </body>
 
 </html>
