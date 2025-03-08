@@ -1,4 +1,4 @@
-window.backgroundConfig = {
+window.ScapeJs = {
     type: 'shape',
     shape: 'diamond',
     count: 20,
