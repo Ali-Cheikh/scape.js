@@ -27,7 +27,10 @@
         Create stunning, interactive backgrounds for your website with ease.
       </p>
       <a href="#implementation"
-        class="mt-8 inline-block px-6 py-3 bg-blue-500 text-white rounded-lg hover:bg-blue-600 transition-all fade-in">Get
+        class="mt-12 inline-block px-8 py-3 bg-blue-500 text-white rounded-lg hover:bg-blue-600 transition-all fade-in">Get
+        Started</a>
+        <a href="docs"
+        class="mt-12 inline-block px-8 py-3 bg-orange-400 text-white rounded-lg hover:bg-orange-500 transition-all fade-in">read docs
         Started</a>
     </div>
   </header>
@@ -146,138 +149,26 @@ window.ScapeConfig = {
         Customize the background to fit your needs:
       </p>
       <div class="mt-8 lg:mt-0 overflow-x-auto fade-in">
-        <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
-          <!-- Table for Shape Configuration -->
-          <table class="bg-gray-800 rounded-lg overflow-scroll fade-in">
-            <thead>
-              <th class="px-2 sm:px-4 py-3" colspan="2">Shapes config tools</th>
-              <tr class="hover:bg-gray-700 transition-all bg-gray-700">
-                <th class="px-2 sm:px-4 py-3 text-left text-sm sm:text-base">Option</th>
-                <th class="px-2 sm:px-4 py-3 text-left text-sm sm:text-base">Description</th>
-              </tr>
-            </thead>
-            <tbody>
-              <tr class="hover:bg-gray-700 transition-all border-b border-gray-700">
-                <td class="px-2 sm:px-4 py-4 text-sm sm:text-base">type</td>
-                <td class="px-2 sm:px-4 py-4 text-sm sm:text-base">Set to 'shape'.</td>
-              </tr>
-              <tr class="hover:bg-gray-700 transition-all border-b border-gray-700">
-                <td class="px-2 sm:px-4 py-4 text-sm sm:text-base">shape</td>
-                <td class="px-2 sm:px-4 py-4 text-sm sm:text-base">Choose from circle, hexagon, heart, diamond, star,
-                  triangle, or pentagon.</td>
-              </tr>
-              <tr class="hover:bg-gray-700 transition-all border-b border-gray-700">
-                <td class="px-2 sm:px-4 py-4 text-sm sm:text-base">count</td>
-                <td class="px-2 sm:px-4 py-4 text-sm sm:text-base">Number of elements to generate.</td>
-              </tr>
-              <tr class="hover:bg-gray-700 transition-all border-b border-gray-700">
-                <td class="px-2 sm:px-4 py-4 text-sm sm:text-base">size</td>
-                <td class="px-2 sm:px-4 py-4 text-sm sm:text-base">Size of each element in pixels.</td>
-              </tr>
-              <tr class="hover:bg-gray-700 transition-all border-b border-gray-700">
-                <td class="px-2 sm:px-4 py-4 text-sm sm:text-base">spacing</td>
-                <td class="px-2 sm:px-4 py-4 text-sm sm:text-base">Spacing between elements.</td>
-              </tr>
-              <tr class="hover:bg-gray-700 transition-all border-b border-gray-700">
-                <td class="px-2 sm:px-4 py-4 text-sm sm:text-base">minDistance</td>
-                <td class="px-2 sm:px-4 py-4 text-sm sm:text-base">Minimum distance between elements.</td>
-              </tr>
-              <tr class="hover:bg-gray-700 transition-all border-b border-gray-700">
-                <td class="px-2 sm:px-4 py-4 text-sm sm:text-base">animationDuration</td>
-                <td class="px-2 sm:px-4 py-4 text-sm sm:text-base">Animation duration (e.g., '3s').</td>
-              </tr>
-              <tr class="hover:bg-gray-700 transition-all border-b border-gray-700">
-                <td class="px-2 sm:px-4 py-4 text-sm sm:text-base">floatDistance</td>
-                <td class="px-2 sm:px-4 py-4 text-sm sm:text-base">Floating distance for elements.</td>
-              </tr>
-              <tr class="hover:bg-gray-700 transition-all border-b border-gray-700">
-                <td class="px-2 sm:px-4 py-4 text-sm sm:text-base">rotationRange</td>
-                <td class="px-2 sm:px-4 py-4 text-sm sm:text-base">Maximum rotation in degrees.</td>
-              </tr>
-              <tr class="hover:bg-gray-700 transition-all border-b border-gray-700">
-                <td class="px-2 sm:px-4 py-4 text-sm sm:text-base">opacity</td>
-                <td class="px-2 sm:px-4 py-4 text-sm sm:text-base">Base opacity for elements.</td>
-              </tr>
-              <tr class="hover:bg-gray-700 transition-all border-b border-gray-700">
-                <td class="px-2 sm:px-4 py-4 text-sm sm:text-base">fillColor</td>
-                <td class="px-2 sm:px-4 py-4 text-sm sm:text-base">Fill color for shapes (CSS color value).</td>
-              </tr>
-              <tr class="hover:bg-gray-700 transition-all border-b border-gray-700">
-                <td class="px-2 sm:px-4 py-4 text-sm sm:text-base">strokeColor</td>
-                <td class="px-2 sm:px-4 py-4 text-sm sm:text-base">Stroke color for shapes (CSS color value).</td>
-              </tr>
-              <tr>
-                <td class="px-2 sm:px-4 py-4 text-sm sm:text-base">strokeWidth</td>
-                <td class="px-2 sm:px-4 py-4 text-sm sm:text-base">Stroke width for shapes in pixels.</td>
-              </tr>
-            </tbody>
-          </table>
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+      <!-- Table for Shape Configuration -->
+      <table class="bg-gray-800 rounded-lg overflow-scroll fade-in"></table>
 
-          <!-- Table for Image Configuration -->
-          <table class="bg-gray-800 rounded-lg overflow-scroll fade-in w-full">
-            <thead>
-              <th class="px-2 sm:px-4 py-3" colspan="2">Images config tools</th>
-              <tr class="hover:bg-gray-700 transition-all bg-gray-700">
-                <th class="px-2 sm:px-4 py-3 text-left text-sm sm:text-base">Option</th>
-                <th class="px-2 sm:px-4 py-3 text-left text-sm sm:text-base">Description</th>
-              </tr>
-            </thead>
-            <tbody>
-              <tr class="hover:bg-gray-700 transition-all border-b border-gray-700">
-                <td class="px-2 sm:px-4 py-4 text-sm sm:text-base">type</td>
-                <td class="px-2 sm:px-4 py-4 text-sm sm:text-base">Set to 'image'.</td>
-              </tr>
-              <tr class="hover:bg-gray-700 transition-all border-b border-gray-700">
-                <td class="px-2 sm:px-4 py-4 text-sm sm:text-base">imageUrl</td>
-                <td class="px-2 sm:px-4 py-4 text-sm sm:text-base">URL for the image.</td>
-              </tr>
-              <tr class="hover:bg-gray-700 transition-all border-b border-gray-700">
-                <td class="px-2 sm:px-4 py-4 text-sm sm:text-base">count</td>
-                <td class="px-2 sm:px-4 py-4 text-sm sm:text-base">Number of elements to generate.</td>
-              </tr>
-              <tr class="hover:bg-gray-700 transition-all border-b border-gray-700">
-                <td class="px-2 sm:px-4 py-4 text-sm sm:text-base">size</td>
-                <td class="px-2 sm:px-4 py-4 text-sm sm:text-base">Size of each element in pixels.</td>
-              </tr>
-              <tr class="hover:bg-gray-700 transition-all border-b border-gray-700">
-                <td class="px-2 sm:px-4 py-4 text-sm sm:text-base">spacing</td>
-                <td class="px-2 sm:px-4 py-4 text-sm sm:text-base">Spacing between elements.</td>
-              </tr>
-              <tr class="hover:bg-gray-700 transition-all border-b border-gray-700">
-                <td class="px-2 sm:px-4 py-4 text-sm sm:text-base">minDistance</td>
-                <td class="px-2 sm:px-4 py-4 text-sm sm:text-base">Minimum distance between elements.</td>
-              </tr>
-              <tr class="hover:bg-gray-700 transition-all border-b border-gray-700">
-                <td class="px-2 sm:px-4 py-4 text-sm sm:text-base">animationDuration</td>
-                <td class="px-2 sm:px-4 py-4 text-sm sm:text-base">Animation duration (e.g., '3s').</td>
-              </tr>
-              <tr class="hover:bg-gray-700 transition-all border-b border-gray-700">
-                <td class="px-2 sm:px-4 py-4 text-sm sm:text-base">floatDistance</td>
-                <td class="px-2 sm:px-4 py-4 text-sm sm:text-base">Floating distance for elements.</td>
-              </tr>
-              <tr class="hover:bg-gray-700 transition-all border-b border-gray-700">
-                <td class="px-2 sm:px-4 py-4 text-sm sm:text-base">rotationRange</td>
-                <td class="px-2 sm:px-4 py-4 text-sm sm:text-base">Maximum rotation in degrees.</td>
-              </tr>
-              <tr class="hover:bg-gray-700 transition-all border-b border-gray-700">
-                <td class="px-2 sm:px-4 py-4 text-sm sm:text-base">opacity</td>
-                <td class="px-2 sm:px-4 py-4 text-sm sm:text-base">Base opacity for elements.</td>
-              </tr>
-            </tbody>
-          </table>
-        </div>
-        <hr>
-      </div>
+      <!-- Table for Image Configuration -->
+      <table class="bg-gray-800 rounded-lg overflow-scroll fade-in w-full"></table>
+    </div>
+    <hr>
+  </div>
     </section>
     <!-- Live Demo -->
     <section class="container mx-auto px-6 py-16 fade-in">
       <h2 class="text-4xl font-bold mb-8">Live Demo</h2>
-      <div class="bg-gray-800 p-6 rounded-lg">
-        <p class="text-lg text-gray-300 mb-4">
+      <div class="bg-gray-800 p-1 rounded-lg sm:p-6">
+        <p class="text-lg text-gray-300 mb-4 p-2">
           Here's a live example of the <b>Scape.js</b> in action:
         </p>
-        <div class="h-96 relative overflow-hidden rounded-lg">
-            <iframe src="demo/index.html" frameborder="0" style="width: 100%; height: 100%; scrollbar-width: none; -ms-overflow-style: none;"></iframe>
+        <div class="relative w-full rounded-lg overflow-hidden aspect-video ">
+            <iframe src="demo/index.html" class="w-full h-full border-none" ></iframe>
+            <a href="demo/index.html" target="_blank" class="absolute bottom-1 right-4 py-2 px-4 bg-blue-500 text-white rounded-lg hover:bg-blue-600 transition-all duration-300 ease-in-out">Full View</a>
         </div>
       </div>
     </section>
@@ -326,8 +217,9 @@ window.ScapeConfig = {
 
     fadeElements.forEach((element) => observer.observe(element));
   </script>
-
-  <script src="https://scape-js.vercel.app/scape.js"></script>
+  
+  <script src="scape.js"></script>
+  <script src="js/script.js"></script>
 </body>
 
 </html>
