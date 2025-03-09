@@ -91,7 +91,7 @@ window.ScapeConfig = {
 | Option | Type | Description | Default |
 |--------|------|-------------|---------|
 | `type` | String | Mode identifier ('shape') | `'shape'` |
-| `shape` | String | Element shape type:<br>• circle<br>• hexagon<br>• heart<br>• diamond<br>• star<br>• triangle<br>• pentagon | `'circle'` |
+| `shape` | String | Element shape type:<br>• circle<br>• hexagon<br>• heart<br>• diamond<br>• star<br>• triangle<br>• pentagon<br>• fly<br>• flower<br>• spiral<br>• splash<br>• tesseract<br>• boom<br>• wave<br>• clover<br>• ripple<br>• shell<br>• fractal | `'circle'` |
 | `count` | Number | Total elements to generate | `30` |
 | `size` | Number | Element size (px) | `50` |
 | `spacing` | Number | Gap between elements (px) | `20` |
@@ -119,7 +119,11 @@ window.ScapeConfig = {
 | `rotationRange` | Number | Max rotation (degrees) | `180` |
 | `opacity` | Number | Element transparency (0-1) | `0.8` |
 
+---
+
 ## API Methods
+
+### Public API Methods
 ```javascript
 // Refresh background elements
 ScapeJs.refresh();
@@ -132,7 +136,36 @@ ScapeJs.updateConfig({
 
 // Remove all elements
 ScapeJs.destroy();
+
+// Set a new image URL
+ScapeJs.setImage("path/to/image");
+
+// Set a new shape
+ScapeJs.setShape("shapeName");
+
+// Pause animations
+ScapeJs.pause();
+
+// Resume animations
+ScapeJs.resume();
+
+// Expose the current configuration
+ScapeJs.config();
 ```
+
+### API Methods Table
+
+| Method | Description |
+|--------|-------------|
+| `refresh()` | Refresh the background. |
+| `updateConfig(config)` | Update the configuration dynamically. |
+| `destroy()` | Remove all elements. |
+| `setImage(imageUrl)` | Set a new image URL on command. |
+| `setShape(shapeName)` | Set a new shape on command. |
+| `pause()` | Pause animations. |
+| `resume()` | Resume animations. |
+| `config()` | Expose the current configuration (logs to console). |
+---
 
 ## Features
 - Automatic initialization
