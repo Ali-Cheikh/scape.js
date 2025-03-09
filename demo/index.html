@@ -4,123 +4,46 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Dynamic Background</title>
+  <title>Learner Page | Demo</title>
+  <meta name="description" content="Create stunning, interactive backgrounds for your website with ease.">
+  <meta name="keywords" content="scape.js, background, shapes, images, animations, website">
+  <meta name="author" content="Ali Cheikh">
+  <link rel="icon" href="favicon.ico" type="image/x-icon">
+  <meta property="og:title" content="Scape.js">
   <script src="https://cdn.tailwindcss.com"></script>
-  <script>
-    // Default configuration
-    window.backgroundConfig = {
-      type: 'shape', // 'image' or 'shape'
-      shape: 'diamond', // Shape type
-      count: 20, // Number of elements
-      size: 30, // Size of each element
-      spacing: 200, // Spacing between elements
-      fillColor: 'hsla(45, 90%, 60%, 0.8)', // Fill color
-      strokeColor: 'rgba(0, 0, 0, 0.5)', // Stroke color
-      strokeWidth: 2, // Stroke width
-    };
-  </script>
+  <!-- CodeMirror CSS and JS -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.63.0/codemirror.min.css" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.63.0/theme/monokai.min.css">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.63.0/codemirror.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.63.0/mode/javascript/javascript.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.63.0/addon/edit/matchbrackets.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.63.0/addon/edit/closebrackets.min.js"></script>
+
 </head>
 
 <body class="bg-gray-900 min-h-screen flex flex-col items-center justify-center gap-6 p-4">
-  <h1 class="text-4xl font-bold text-white p-8 text-center">mess around a bit 😅</h1>
+  <h1 class="text-4xl font-bold text-white p-8 text-center">Edit the Config and See the Magic ✨</h1>
 
-  <!-- Configuration Inputs -->
-  <div class="w-full max-w-4xl grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 mb-4">
-    <div>
-      <label class="text-white">Shape:</label>
-      <select id="shapeSelect" class="w-full p-2 rounded-lg bg-gray-800 text-white">
-        <option value="diamond">Diamond</option>
-        <option value="circle">Circle</option>
-        <option value="triangle">Triangle</option>
-      </select>
-    </div>
-    <div>
-      <label class="text-white">Count:</label>
-      <input type="number" id="countInput" value="20" class="w-full p-2 rounded-lg bg-gray-800 text-white">
-    </div>
-    <div>
-      <label class="text-white">Size:</label>
-      <input type="number" id="sizeInput" value="30" class="w-full p-2 rounded-lg bg-gray-800 text-white">
-    </div>
-    <div>
-      <label class="text-white">Spacing:</label>
-      <input type="number" id="spacingInput" value="200" class="w-full p-2 rounded-lg bg-gray-800 text-white">
-    </div>
-    <div>
-      <label class="text-white">Fill Color:</label>
-      <input type="text" id="fillColorInput" value="hsla(45, 90%, 60%, 0.8)" class="w-full p-2 rounded-lg bg-gray-800 text-white">
-    </div>
-    <div>
-      <label class="text-white">Stroke Color:</label>
-      <input type="text" id="strokeColorInput" value="rgba(0, 0, 0, 0.5)" class="w-full p-2 rounded-lg bg-gray-800 text-white">
-    </div>
-    <div>
-      <label class="text-white">Stroke Width:</label>
-      <input type="number" id="strokeWidthInput" value="2" class="w-full p-2 rounded-lg bg-gray-800 text-white">
-    </div>
+  <!-- Code Editor -->
+  <div class="w-full max-w-xl bg-gray-800 rounded-lg overflow-hidden">
+    <textarea id="codeEditor" class="hidden">
+// Edit the configuration below
+window.ScapeConfig = {
+  type: 'shape',
+  shape: 'star',
+  count: 20,
+  size: 30,
+  spacing: 200,
+  fillColor: 'yellow',
+  strokeColor: 'rgba(0, 0, 0, 0.5)',
+  strokeWidth: 2
+};</textarea>
   </div>
-
-  <!-- Configuration Display -->
-  
-  <div class="w-full max-w-4xl bg-gray-800 text-white p-4 rounded-lg overflow-x-auto">
-    <p class="w-full max-w-4xl bg-gray-800 text-white text-large">//you can copy this once you are satisfied</p><br>
-    <pre>window.ScapeJs = <code id="sourceCode">// Configuration will be displayed here</code></pre>
-  </div>
-
-  <!-- Buttons -->
-  <div class="flex flex-wrap gap-4 p-4">
-    <button onclick="ScapeJs.refresh(); ScapeJs.updateConfig(backgroundConfig)"
-      class="bg-white px-4 py-2 rounded-lg shadow-md hover:bg-gray-100 transition-colors w-full sm:w-auto">
-      Refresh Background
-    </button>
-
-    <button onclick="ScapeJs.updateConfig({ shape: 'triangle', fillColor: 'gray', strokeColor: 'black', strokeWidth: 1 })"
-      class="bg-yellow-400 px-4 py-2 rounded-lg shadow-md hover:bg-gray-100 transition-colors w-full sm:w-auto">
-      Change to Triangles
-    </button>
-
-    <button onclick="ScapeJs.destroy()"
-      class="bg-red-500 text-white px-4 py-2 rounded-lg shadow-md hover:bg-red-600 transition-colors w-full sm:w-auto">
-      Remove Background
-    </button>
-  </div>
-<br><br><br><br><br>
-  <script>
-    const inputs = ['shape', 'count', 'size', 'spacing', 'fillColor', 'strokeColor', 'strokeWidth'];
-
-    function updateConfig() {
-      const config = {
-        type: 'shape',
-        shape: document.getElementById('shapeSelect').value,
-        count: parseInt(document.getElementById('countInput').value),
-        size: parseInt(document.getElementById('sizeInput').value),
-        spacing: parseInt(document.getElementById('spacingInput').value),
-        fillColor: document.getElementById('fillColorInput').value,
-        strokeColor: document.getElementById('strokeColorInput').value,
-        strokeWidth: parseInt(document.getElementById('strokeWidthInput').value)
-      };
-
-      window.ScapeJs = config;
-      document.getElementById('sourceCode').textContent = JSON.stringify(config, null, 2);
-
-      // Update the background if ScapeJs is available
-      if (typeof ScapeJs !== 'undefined') {
-        ScapeJs.updateConfig(config);
-      }
-    }
-
-    inputs.forEach(input => {
-      const element = document.getElementById(input + (input === 'shape' ? 'Select' : 'Input'));
-      element.addEventListener('change', updateConfig);
-      element.addEventListener('input', updateConfig);
-    });
-
-    // Initial update
-    updateConfig();
-  </script>
 
   <!-- Include the ScapeJs script -->
-  <script src="demo.js"></script>
+  <script src="config.js"></script>
+  <script src="/scape.js"></script>
+</body>
 </body>
 
 </html>
