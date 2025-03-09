@@ -1,10 +1,10 @@
-(function () {
+const ScapeJs = (function () {
   // Default configuration
-  const githubImg = "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACAAAAAgCAYAAABzenr0AAAAGXRFWHRTb2Z0d2FyZQBBZG9iZSBJbWFnZVJlYWR5ccllPAAAAyRpVFh0WE1MOmNvbS5hZG9iZS54bXAAAAAAADw/eHBhY2tldCBiZWdpbj0i77u/IiBpZD0iVzVNME1wQ2VoaUh6cmVTek5UY3prYzlkIj8+IDx4OnhtcG1ldGEgeG1sbnM6eD0iYWRvYmU6bnM6bWV0YS8iIHg6eG1wdGs9IkFkb2JlIFhNUCBDb3JlIDUuMy1jMDExIDY2LjE0NTY2MSwgMjAxMi8wMi8wNi0xNDo1NjoyNyAgICAgICAgIj4gPHJkZjpSREYgeG1sbnM6cmRmPSJodHRwOi8vd3d3LnczLm9yZy8xOTk5LzAyLzIyLXJkZi1zeW50YXgtbnMjIj4gPHJkZjpEZXNjcmlwdGlvbiByZGY6YWJvdXQ9IiIgeG1sbnM6eG1wPSJodHRwOi8vbnMuYWRvYmUuY29tL3hhcC8xLjAvIiB4bWxuczp4bXBNTT0iaHR0cDovL25zLmFkb2JlLmNvbS94YXAvMS4wL21tLyIgeG1sbnM6c3RSZWY9Imh0dHA6Ly9ucy5hZG9iZS5jb20veGFwLzEuMC9zVHlwZS9SZXNvdXJjZVJlZiMiIHhtcDpDcmVhdG9yVG9vbD0iQWRvYmUgUGhvdG9zaG9wIENTNiAoTWFjaW50b3NoKSIgeG1wTU06SW5zdGFuY2VJRD0ieG1wLmlpZDpFMTZCRDY3REIzRjAxMUUyQUQzREIxQzRENUFFNUM5NiIgeG1wTU06RG9jdW1lbnRJRD0ieG1wLmRpZDpFMTZCRDY3RUIzRjAxMUUyQUQzREIxQzRENUFFNUM5NiI+IDx4bXBNTTpEZXJpdmVkRnJvbSBzdFJlZjppbnN0YW5jZUlEPSJ4bXAuaWlkOkUxNkJENjdCQjNGMDExRTJBRDNEQjFDNEQ1QUU1Qzk2IiBzdFJlZjpkb2N1bWVudElEPSJ4bXAuZGlkOkUxNkJENjdDQjNGMDExRTJBRDNEQjFDNEQ1QUU1Qzk2Ii8+IDwvcmRmOkRlc2NyaXB0aW9uPiA8L3JkZjpSREY+IDwveDp4bXBtZXRhPiA8P3hwYWNrZXQgZW5kPSJyIj8+SM9MCAAAA+5JREFUeNrEV11Ik1EY3s4+ddOp29Q5b0opCgKFsoKoi5Kg6CIhuwi6zLJLoYLopq4qsKKgi4i6CYIoU/q5iDAKs6syoS76IRWtyJ+p7cdt7sf1PGOD+e0c3dygAx/67ZzzPM95/877GYdHRg3ZjMXFxepQKNS6sLCwJxqNNuFpiMfjVs4ZjUa/pmmjeD6VlJS8NpvNT4QQ7mxwjSsJiEQim/1+/9lgMHgIr5ohuxG1WCw9Vqv1clFR0dCqBODElV6v90ogEDjGdYbVjXhpaendioqK07CIR7ZAqE49PT09BPL2PMgTByQGsYiZlQD4uMXtdr+JxWINhgINYhGT2MsKgMrm2dnZXgRXhaHAg5jEJodUAHxux4LudHJE9RdEdA+i3Juz7bGHe4mhE9FNrgwBCLirMFV9Okh5eflFh8PR5nK5nDabrR2BNJlKO0T35+Li4n4+/J+/JQCxhmu5h3uJoXNHPbmWZAHMshWB8l5/ipqammaAf0zPDDx1ONV3vurdidqwAQL+pEc8sLcAe1CCvQ3YHxIW8Pl85xSWNC1hADDIv0rIE/o4J0k3kww4xSlwIhcq3EFFOm7KN/hUGOQkt0CFa5WpNJlMvxBEz/IVQAxg/ZRZl9wiHA63yDYieM7DnLP5CiAGsC7I5sgtYKJGWe2A8seFqgFJrJjEPY1Cn3pJ8/9W1e5VWsFDTEmFrBcoDhZJEQkXuhICMyKpjhahqN21hRYATKfUOlDmkygrR4o4C0VOLGJKrOITKB4jijzdXygBKixyC5TDQdnk/Pz8qRw6oOWGlsTKGOQW6OH6FBWsyePxdOXLTgxiyebILZCjz+GLgMIKnXNzc49YMlcRdHXcSwxFVgTInQhC9G33UhNoJLuqq6t345p9y3eUy8OTk5PjAHuI9uo4b07FBaOhsu0A4Unc+T1TU1Nj3KsSSE5yJ65jqF2DDd8QqWYmAZrIM2VlZTdnZmb6AbpdV9V6ec9znf5Q7HjYumdRE0JOp3MjitO4SFa+cZz8Umqe3TCbSLvdfkR/kWDdNQl5InuTcysOcpFT35ZrbBxx4p3JAHlZVVW1D/634VRt+FvLBgK/v5LV9WS+10xMTEwtRw7XvqOL+e2Q8V3AYIOIAXQ26/heWVnZCVfcyKHg2CBgTpmPmjYM8l24GyaUHyaIh7XwfR9ErE8qHoDfn2LTNAVC0HX6MFcBIP8Bi+6F6cdW/DICkANRfx99fEYFQ7Nph5i/uQiA214gno7K+guhaiKg9gC62+M8eR7XsBsYJ4ilam60Fb7r7uAj8wFyuwM1oIOWgfmDy6RXEEQzJMPe23DXrVS7rtyD3Df8z/FPgAEAzWU5Ku59ZAUAAAAASUVORK5CYII=";
+  const githubImg = "https://github.githubassets.com/images/modules/logos_page/GitHub-Mark.png";
   const defaultConfig = {
     type: "shape", // 'image' or 'shape'
     imageUrl: githubImg, // URL for the image
-    shape: "heart", // Shape type (circle, hexagon, heart, diamond, star, triangle, pentagon)
+    shape: "heart", // Shape type (circle, hexagon, heart, diamond, star, triangle, pentagon, fly, flower, spiral, splash, tesseract, boom, wave, clover, ripple, shell, fractal)
     count: 30, // Number of elements
     size: 50, // Size of each element
     spacing: 200, // Spacing between elements
@@ -13,26 +13,31 @@
     floatDistance: 30, // Floating distance
     rotationRange: 360, // Maximum rotation in degrees
     hoverScale: 1.1, // Scale on hover
-    opacity: 0.6, // Base opacity
+    opacity: 0.8, // Base opacity
     fillColor: "hsla(200, 90%, 60%, 0.8)", // Fill color for shapes
     strokeColor: "rgba(255, 255, 255, 0.5)", // Stroke color for shapes
     strokeWidth: 2, // Stroke width for shapes
+    onClick: null, // Callback for click events
+    onHover: null, // Callback for hover events
   };
 
-  // Merge user config with defaults
-  const config = { ...defaultConfig, ...window.ScapeConfig };
+  // Merge with defaults, ensuring window.ScapeConfig is an object/called
+  let config = { ...defaultConfig, ...(window.ScapeConfig || {}) };
 
   // Function to dynamically create the @keyframes animation
   function setupKeyframeAnimation() {
-    const styleSheet = document.createElement("style");
-    styleSheet.textContent = `
-          @keyframes float {
-            0% { transform: translate(0, 0) rotate(var(--rotation)); }
-            50% { transform: translate(0, ${config.floatDistance}px) rotate(var(--rotation)); }
-            100% { transform: translate(0, 0) rotate(var(--rotation)); }
-          }
-        `;
-    document.head.appendChild(styleSheet);
+    if (!document.getElementById("scapejs-keyframes")) {
+      const styleSheet = document.createElement("style");
+      styleSheet.id = "scapejs-keyframes";
+      styleSheet.textContent = `
+        @keyframes float {
+          0% { transform: translate(0, 0) rotate(var(--rotation)); }
+          50% { transform: translate(0, ${config.floatDistance}px) rotate(var(--rotation)); }
+          100% { transform: translate(0, 0) rotate(var(--rotation)); }
+        }
+      `;
+      document.head.appendChild(styleSheet);
+    }
   }
 
   // Function to create an element (image or shape)
@@ -46,10 +51,7 @@
       element = document.createElementNS("http://www.w3.org/2000/svg", "svg");
       element.setAttribute("width", config.size);
       element.setAttribute("height", config.size);
-      const polygon = document.createElementNS(
-        "http://www.w3.org/2000/svg",
-        "polygon"
-      );
+      const polygon = document.createElementNS("http://www.w3.org/2000/svg", "polygon");
       const points = generateShapePoints(config.shape, config.size);
       polygon.setAttribute("points", points);
       polygon.setAttribute("fill", config.fillColor);
@@ -66,24 +68,32 @@
     element.style.left = `${x}px`;
     element.style.top = `${y}px`;
     element.style.opacity = config.opacity;
-    element.style.transition = `transform ${config.animationDuration}s ease, opacity ${config.opacity}s ease`;
-    element.style.animation = `float ${
-      config.animationDuration
-    } infinite ease-in-out ${Math.random() * 2}s`;
-    // Set the rotation as a CSS variable
+    element.style.transition = `transform ${config.animationDuration}s ease, opacity ${config.animationDuration}s ease`;
+    element.style.animation = `float ${config.animationDuration} infinite ease-in-out ${Math.random() * 2}s`;
     element.style.setProperty("--rotation", `${rotationValue}deg`);
-    element.style.pointerEvents = "none"; // Ensure shapes don't interfere with clicks
-
-    element.addEventListener("mouseenter", () => {
-      element.style.transform = `scale(${config.hoverScale})`;
-      element.style.opacity = 1;
-    });
-
-    element.addEventListener("mouseleave", () => {
-      element.style.transform = "scale(1)";
-      element.style.opacity = config.opacity;
-    });
     element.classList.add("background-element"); // Add a class for easy removal
+
+    // Enable interactions if onClick or onHover is provided
+    if (config.onClick || config.onHover) {
+      element.style.pointerEvents = "auto";
+    }
+
+    // Add event listeners if callbacks are provided
+    if (config.onClick) {
+      element.addEventListener("click", config.onClick);
+    }
+    if (config.onHover) {
+      element.addEventListener("mouseenter", (event) => {
+        element.style.transform = `scale(${config.hoverScale}) rotate(${rotationValue}deg)`;
+        element.style.opacity = 1;
+        config.onHover(event);
+      });
+
+      element.addEventListener("mouseleave", (event) => {
+        element.style.transform = `scale(1) rotate(${rotationValue}deg)`;
+        element.style.opacity = config.opacity;
+      });
+    }
 
     return element;
   }
@@ -97,7 +107,6 @@
     switch (shape) {
       case "circle":
         for (let i = 0; i < 360; i += 20) {
-          // Reduced from 10 to 20
           const angle = (i * Math.PI) / 180;
           const x = center + radius * Math.cos(angle);
           const y = center + radius * Math.sin(angle);
@@ -113,15 +122,16 @@
         }
         break;
       case "heart":
+        // Heart shape formula based on parametric equations
         for (let i = 0; i < 360; i += 10) {
           const angle = (i * Math.PI) / 180;
           const x = center + 16 * Math.pow(Math.sin(angle), 3);
           const y =
             center -
             (13 * Math.cos(angle) -
-              5 * Math.cos(2 * angle) -
-              2 * Math.cos(3 * angle) -
-              Math.cos(4 * angle));
+            5 * Math.cos(2 * angle) -
+            2 * Math.cos(3 * angle) -
+            Math.cos(4 * angle));
           points.push(`${x},${y}`);
         }
         break;
@@ -158,6 +168,113 @@
           points.push(`${x},${y}`);
         }
         break;
+      case "fly":
+        //  fly wings shape formula based on limits equations
+        for (let i = 0; i < 360; i += 10) {
+          const angle = (i * Math.PI) / 180;
+          const x = center + radius * Math.cos(angle);
+          const y = center - radius * Math.sin(angle) * Math.cos(angle);
+          points.push(`${x},${y}`);
+        }
+        break;
+      case "snowflake":
+        for (let i = 0; i < 360; i += 10) {
+          const angle = (i * Math.PI) / 180;
+          const r = radius * (0.5 + 0.5 * Math.cos(9 * angle)); // Petal effect
+          const x = center + r * Math.cos(angle);
+          const y = center - r * Math.sin(angle);
+          points.push(`${x},${y}`);
+        }
+        break;
+      case "flower":
+        for (let i = 0; i < 360; i += 10) {
+          const angle = (i * Math.PI) / 180;
+          const r = radius * (0.5 + 0.5 * Math.abs(Math.sin(3 * angle)));
+          const x = center + r * Math.cos(angle);
+          const y = center - r * Math.sin(angle);
+          points.push(`${x},${y}`);
+        }
+        break;
+      case "spiral":
+        const turns = 3; // Number of spiral turns
+        for (let i = 0; i < 360 * turns; i += 10) {
+          const angle = (i * Math.PI) / 180;
+          const r = radius * (i / (360 * turns)); // Gradually increase radius
+          const x = center + r * Math.cos(angle);
+          const y = center - r * Math.sin(angle);
+          points.push(`${x},${y}`);
+        }
+        break;
+      case "splash":
+        for (let i = 0; i < 360; i += 10) {
+          const angle = (i * Math.PI) / 180;
+          const r = radius * (0.5 + Math.random() * 0.5); // Random radius
+          const x = center + r * Math.cos(angle);
+          const y = center - r * Math.sin(angle);
+          points.push(`${x},${y}`);
+        }
+      break;
+      case "tesseract":
+        for (let i = 0; i < 360; i += 10) {
+          const angle = (i * Math.PI) / 180;
+          const x = center + radius * Math.sin(angle) * (Math.exp(Math.cos(angle)) - 4 * Math.cos(14 * angle) - Math.pow(Math.sin(angle / 2), 5));
+          const y = center - radius * Math.cos(angle) * (Math.exp(Math.cos(angle)) - 4 * Math.cos(14 * angle) - Math.pow(Math.sin(angle / 2), 5));
+          points.push(`${x},${y}`);
+        }
+        break;
+      case "boom":
+        for (let i = 0; i < 360; i += 10) {
+          const angle = (i * Math.PI) / 180;
+          const x = center - radius * Math.cos(angle) * (Math.exp(Math.cos(angle)) - 2 * Math.cos(25 * angle) - Math.pow(Math.sin(angle / 40), 5));
+          const y = center + radius * Math.sin(angle) * (Math.exp(Math.cos(angle)) - 2 * Math.cos(25 * angle) - Math.pow(Math.sin(angle / 40), 5));
+          points.push(`${x},${y}`);
+        }
+        break;
+        case "wave":
+          for (let i = 0; i < 360; i += 10) {
+            const angle = (i * Math.PI) / 180;
+            const x = center + radius * Math.cos(angle);
+            const y = center - radius * Math.sin(angle) * ( 0.1 + 0.5 * Math.cos(8 * angle));
+            points.push(`${x},${y}`);
+          }
+          break;
+        case "clover":
+          for (let i = 0; i < 360; i += 10) {
+            const angle = (i * Math.PI) / 180;
+            const r = radius * (0.5 + 0.5 * Math.abs(Math.sin(2 * angle)));
+            const x = center + r * Math.cos(angle);
+            const y = center - r * Math.sin(angle);
+            points.push(`${x},${y}`);
+          }
+          break;
+        case "ripple":
+          for (let i = 0; i < 360; i += 10) {
+            const angle = (i * Math.PI) / 180;
+            const r = radius * (0.5 + 0.5 * Math.sin(3 * angle));
+            const x = center + r * Math.cos(angle);
+            const y = center - r * Math.sin(angle);
+            points.push(`${x},${y}`);
+          }
+          break;
+        case "shell":
+          for (let i = 0; i < 360 * 2; i += 10) {
+            const angle = (i * Math.PI) / 180;
+            const r = radius * (i / (360 * 2));
+            const x = center + r * Math.cos(angle);
+            const y = center - r * Math.sin(angle);
+            points.push(`${x},${y}`);
+          }
+          break;
+    
+        case "fractal":
+          for (let i = 0; i < 360; i += 10) {
+            const angle = (i * Math.PI) / 180;
+            const r = radius * (0.5 + 0.5 * Math.sin(7 * angle) * Math.cos(5 * angle));
+            const x = center + r * Math.cos(angle);
+            const y = center - r * Math.sin(angle);
+            points.push(`${x},${y}`);
+          }
+          break;
       default:
         points = [`${center},0`, `${size},${size}`, `0,${size}`];
     }
@@ -184,7 +301,7 @@
         config.minDistance
       );
       if (pos) {
-        const rotation = Math.floor(Math.random() * 360);
+        const rotation = Math.floor(Math.random() * config.rotationRange);
         const element = createElement(pos.x, pos.y, rotation);
         document.body.appendChild(element);
       }
@@ -230,8 +347,69 @@
     };
   }
 
+  // Function to destroy all elements
+  function destroy() {
+    document.querySelectorAll(".background-element").forEach((element) => element.remove());
+  }
+
+  // Function to update configuration and regenerate background
+  function updateConfig(newConfig) {
+    config = { ...config, ...newConfig };
+    generateBackground();
+  }
+
+  // Function to set a new image URL
+  function setImage(url) {
+    config.imageUrl = url;
+    generateBackground();
+  }
+
+  // Function to set a new shape
+  function setShape(shape) {
+    config.shape = shape;
+    generateBackground();
+  }
+
+  // Function to pause animations
+  function pause() {
+    document.querySelectorAll(".background-element").forEach((element) => {
+      element.style.animationPlayState = "paused";
+    });
+  }
+
+  // Function to resume animations
+  function resume() {
+    document.querySelectorAll(".background-element").forEach((element) => {
+      element.style.animationPlayState = "running";
+    });
+  }
+
+  let lastWidth = window.innerWidth;
+  let lastHeight = window.innerHeight;
+
+  window.addEventListener("resize", debounce(() => {
+    const currentWidth = window.innerWidth;
+    const currentHeight = window.innerHeight;
+
+    if (currentWidth !== lastWidth || currentHeight !== lastHeight) {
+      lastWidth = currentWidth;
+      lastHeight = currentHeight;
+      generateBackground();
+    }
+  }, 250));
+
   // Initialize
   setupKeyframeAnimation(); // Inject the @keyframes animation
-  generateBackground();
-  window.addEventListener("resize", debounce(generateBackground, 250));
+  generateBackground(); // Generate the background
+
+  // Expose API methods
+  return {
+    refresh: generateBackground,
+    updateConfig,
+    destroy,
+    setImage,
+    setShape,
+    pause,
+    resume,
+  };
 })();
