@@ -28,7 +28,7 @@ Follow these steps to add **Scape.js** to your website:
 
 1. Include the script in your HTML file:
 ```html
-<script src="https://ali-cheikh.github.io/scape.js"></script>
+<script src="https://scape-js.vercel.app/scape.js"></script>
 <script src="config.js"></script>
 ```
 
