@@ -19,7 +19,8 @@
 
 <body class="bg-gray-900 text-white font-sans min-h-screen flex flex-col items-center justify-center ">
   <!-- Header -->
-  <header class="text-center py-16 bg-gray-800 min-w-full relative min-h-screen flex flex-col items-center justify-center">
+  <header
+    class="text-center py-16 bg-gray-800 min-w-full relative min-h-screen flex flex-col items-center justify-center">
     <div class="absolute top-0 left-0 w-full h-full bg-gray-900 opacity-50 z-0"></div>
     <div class="relative z-10 items-center justify-center">
       <h1 class="text-6xl font-bold fade-in">Scape.js</h1>
@@ -29,8 +30,9 @@
       <a href="#implementation"
         class="mt-12 inline-block px-8 py-3 bg-blue-500 text-white rounded-lg hover:bg-blue-600 transition-all fade-in">Get
         Started</a>
-        <a href="docs"
-        class="mt-12 inline-block px-8 py-3 bg-orange-400 text-white rounded-lg hover:bg-orange-500 transition-all fade-in">read docs
+      <a href="docs"
+        class="mt-12 inline-block px-8 py-3 bg-orange-400 text-white rounded-lg hover:bg-orange-500 transition-all fade-in">read
+        docs
         Started</a>
     </div>
   </header>
@@ -99,18 +101,58 @@ window.ScapeConfig = {
         </code>
       </pre>
         <li class="mb-4">
-          Add the following CSS to your project (optional for animations):
+          For image-based backgrounds, use this configuration:
         </li>
         <pre class="bg-gray-800 p-6 rounded-lg mt-2 text-sm">
         <code class="text-gray-300 text-wrap">
-@keyframes float {
-  0% { transform: translate(0, 0) rotate(var(--rotation)); }
-  50% { transform: translate(0, 30px) rotate(var(--rotation)); }
-  100% { transform: translate(0, 0) rotate(var(--rotation)); }
-}
+window.ScapeConfig = {
+ type: 'image',
+  imageUrl: 'path/to/your/image.png',
+  count: 20,
+  size: 50,
+  spacing: 100,
+  minDistance: 30,
+  animationDuration: '3s',
+  floatDistance: 20,
+  rotationRange: 45,
+  opacity: 0.8
+};
         </code>
       </pre>
-      </ol>
+      </ol><br>
+      <h2 class="text-4xl font-bold mb-8">
+        Available API Methods:
+      </h2>
+      <p class="text-gray-300">
+        You can use the following methods to interact with the background:
+      </p>
+      <pre class="bg-gray-800 p-6 rounded-lg mt-8 text-sm">
+      <code class="text-gray-300 text-wrap">
+      // Refresh the background
+      Scape.refresh();
+
+      // Update configuration
+      Scape.updateConfig(newConfig);
+
+      // Destroy all elements
+      Scape.destroy();
+
+      // Set new image
+      Scape.setImage('path/to/image');
+
+      // Set new shape
+      Scape.setShape('star');
+
+      // Pause animations
+      Scape.pause();
+
+      // Resume animations
+      Scape.resume();
+
+      // Get current config
+      Scape.config();
+        </code>
+      </pre>
     </section>
 
     <!-- Introduction -->
@@ -142,22 +184,26 @@ window.ScapeConfig = {
     </section>
 
     <!-- Configuration Options -->
-    <section class="container mx-auto px-6 lg:px-0 py-16 fade-in">
+    <section class="container mx-auto px-6 lg:px-0 py-16 fade-in" style="opacity: 1 !important;">
       <br><br><br>
       <h2 class="text-4xl font-bold mb-8">Configuration Options</h2>
       <p class="text-lg text-gray-300 leading-relaxed">
         Customize the background to fit your needs:
       </p>
       <div class="mt-8 lg:mt-0 overflow-x-auto fade-in">
-    <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
-      <!-- Table for Shape Configuration -->
-      <table class="bg-gray-800 rounded-lg overflow-scroll fade-in"></table>
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-8 fade-in-table">
 
-      <!-- Table for Image Configuration -->
-      <table class="bg-gray-800 rounded-lg overflow-scroll fade-in w-full"></table>
-    </div>
-    <hr>
-  </div>
+          <!-- Table API Configuration -->
+          <table class="bg-gray-800 rounded-lg overflow-scroll w-full"></table>
+
+          <!-- Table for Shape Configuration -->
+          <table class="bg-gray-800 rounded-lg overflow-scroll"></table>
+
+          <!-- Table for Image Configuration -->
+          <table class="bg-gray-800 rounded-lg overflow-scroll w-full"></table>
+        </div>
+        <hr>
+      </div>
     </section>
     <!-- Live Demo -->
     <section class="container mx-auto px-6 py-16 fade-in">
@@ -167,8 +213,10 @@ window.ScapeConfig = {
           Here's a live example of the <b>Scape.js</b> in action:
         </p>
         <div class="relative w-full rounded-lg overflow-hidden aspect-video ">
-            <iframe src="demo/index.html" class="w-full h-full border-none" ></iframe>
-            <a href="demo/index.html" target="_blank" class="absolute bottom-1 right-4 py-2 px-4 bg-blue-500 text-white rounded-lg hover:bg-blue-600 transition-all duration-300 ease-in-out">Full View</a>
+          <iframe src="demo/index.html" class="w-full h-full border-none"></iframe>
+          <a href="demo/index.html" target="_blank"
+            class="absolute bottom-1 right-4 py-2 px-4 bg-blue-500 text-white rounded-lg hover:bg-blue-600 transition-all duration-300 ease-in-out">Full
+            View</a>
         </div>
       </div>
     </section>
@@ -178,46 +226,6 @@ window.ScapeConfig = {
     <p class="text-gray-300">Made with ❤️ by Ali Cheikh</p>
   </footer>
 
-  <script>
-    // Create and inject CSS
-    const style = document.createElement("style");
-    style.textContent = `
-        .fade-in {
-            opacity: 0;
-            transform: translateY(20px);
-            transition: opacity 0.6s ease-out, transform 0.6s ease-out;
-        }
-        .fade-in.visible {
-            opacity: 1.2;
-            transform: translateY(0);
-        }
-        .fade-in.vis {
-            opacity: 0.6;
-            transform: translateY(0);
-        }
-    `;
-    document.head.appendChild(style);
-
-    // Add fade-in animations on scroll
-    const fadeElements = document.querySelectorAll(".fade-in");
-    const observer = new IntersectionObserver(
-      (entries) => {
-        entries.forEach((entry) => {
-          if (entry.isIntersecting) {
-            entry.target.classList.add("visible");
-            entry.target.classList.remove("vis");
-          } else {
-            entry.target.classList.add("vis");
-            entry.target.classList.remove("visible");
-          }
-        });
-      },
-      { threshold: 0.5 }
-    );
-
-    fadeElements.forEach((element) => observer.observe(element));
-  </script>
-  
   <script src="scape.js"></script>
   <script src="js/script.js"></script>
 </body>

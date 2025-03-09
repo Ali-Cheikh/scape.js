@@ -404,12 +404,14 @@ const ScapeJs = (function () {
 
   // Expose API methods
   return {
-    refresh: generateBackground,
-    updateConfig,
-    destroy,
-    setImage,
-    setShape,
-    pause,
-    resume,
+    // Public API methods used with ScapeJs.methodName()
+    refresh: generateBackground, // Refresh the background
+    updateConfig, // Update the configuration
+    destroy, // Destroy all elements
+    setImage, // Set a new image URL on command ("path/to/image")
+    setShape, // Set a new shape on command ("shape Name")
+    pause, // Pause animations
+    resume, // Resume animations
+    config, // Expose the current configuration consider it consol.log()
   };
 })();
