@@ -1,180 +1,177 @@
+
+update v1.0.1
 # Scape.js Documentation
 
 ## Overview
 Scape.js is a JavaScript library that creates animated background elements (shapes or images) with floating animations and hover effects.
 
-## Installation
-```html
-<!-- Add the script to your HTML -->
-<script src="path/to/scape.js"></script>
-```
+## Important Note
+All API methods should be called after the DOM is fully loaded. Wrap your code in an event listener:
 
-## Usage
-### Basic Implementation
-```html
-<!DOCTYPE html>
-<html>
-<head>
-    <title>Scape.js Demo</title>
-</head>
-<body>
-    <!-- Add the script before closing body tag -->
-    <script src="path/to/scape.js"></script>
-    <script>
-        // Configure Scape.js
-        window.ScapeConfig = {
-            type: "shape",
-            shape: "circle",
-            count: 30
-        };
-    </script>
-</body>
-</html>
-```
-
-### Advanced Usage
-```javascript
-// Initialize with custom settings
-window.ScapeConfig = {
-    type: "shape",
-    shape: "heart",
-    count: 20,
-    fillColor: "#ff6b6b",
-    opacity: 0.7,
-    floatDistance: 50
-};
-
-// Update configuration dynamically
-setTimeout(() => {
-    ScapeJs.updateConfig({
-        shape: "star",
-        fillColor: "#4ecdc4"
-    });
-}, 3000);
-```
-
-### Shape Mode
-```javascript
-window.ScapeConfig = {
-    type: "shape",
-    shape: "heart", // (circle, hexagon, diamond, star, triangle, pentagon, fly, flower, spiral, splash, tesseract, boom, wave, clover, ripple, shell, fractal)
-    count: 30,
-    size: 50,
-    fillColor: "#3db8f5",
-    strokeColor: "#ffffff",
-    strokeWidth: 2,
-    opacity: 0.6,
-    animationDuration: "3s",
-    floatDistance: 30,
-    minDistance: 150
-};
-```
-
-### Image Mode
-```javascript
-window.ScapeConfig = {
-    type: "image",
-    imageUrl: "path/to/your/image.png",
-    count: 20,
-    size: 40,
-    opacity: 0.8,
-    animationDuration: "4s",
-    floatDistance: 40,
-    minDistance: 100
-};
-```
-
-## Configuration Options
-
-### Shape Mode Options
-
-| Option | Type | Description | Default |
-|--------|------|-------------|---------|
-| `type` | String | Mode identifier ('shape') | `'shape'` |
-| `shape` | String | Element shape type:<br>• circle<br>• hexagon<br>• heart<br>• diamond<br>• star<br>• triangle<br>• pentagon<br>• fly<br>• flower<br>• spiral<br>• splash<br>• tesseract<br>• boom<br>• wave<br>• clover<br>• ripple<br>• shell<br>• fractal | `'circle'` |
-| `count` | Number | Total elements to generate | `30` |
-| `size` | Number | Element size (px) | `50` |
-| `spacing` | Number | Gap between elements (px) | `20` |
-| `minDistance` | Number | Minimum proximity (px) | `150` |
-| `animationDuration` | String | Animation timing (e.g., '3s') | `'3s'` |
-| `floatDistance` | Number | Float movement range (px) | `30` |
-| `rotationRange` | Number | Max rotation (degrees) | `180` |
-| `opacity` | Number | Element transparency (0-1) | `0.6` |
-| `fillColor` | String | Shape fill color | `'#3db8f5'` |
-| `strokeColor` | String | Shape outline color | `'#ffffff'` |
-| `strokeWidth` | Number | Outline thickness (px) | `2` |
-
-### Image Mode Options
-
-| Option | Type | Description | Default |
-|--------|------|-------------|---------|
-| `type` | String | Mode identifier ('image') | `'image'` |
-| `imageUrl` | String | Image source path | Required |
-| `count` | Number | Total elements to generate | `20` |
-| `size` | Number | Element size (px) | `40` |
-| `spacing` | Number | Gap between elements (px) | `20` |
-| `minDistance` | Number | Minimum proximity (px) | `100` |
-| `animationDuration` | String | Animation timing (e.g., '3s') | `'4s'` |
-| `floatDistance` | Number | Float movement range (px) | `40` |
-| `rotationRange` | Number | Max rotation (degrees) | `180` |
-| `opacity` | Number | Element transparency (0-1) | `0.8` |
-
----
-
-## API Methods
-
-### Public API Methods
-```javascript
-// Refresh background elements
-ScapeJs.refresh();
-
-// Update configuration dynamically
-ScapeJs.updateConfig({
-    type: "image",
-    imageUrl: "new-image.png"
+````javascript
+document.addEventListener('DOMContentLoaded', () => {
+    // Your Scape.js code here
+    // API calls and configuration
 });
+````
 
-// Remove all elements
-ScapeJs.destroy();
+## Installation
 
-// Set a new image URL
-ScapeJs.setImage("path/to/image");
+Add Scape.js to your project:
 
-// Set a new shape
-ScapeJs.setShape("shapeName");
+````html
+<script src="https://cdn.jsdelivr.net/gh/Ali-Cheikh/scape.js@main/scape.js"></script>
+````
 
-// Pause animations
-ScapeJs.pause();
 
-// Resume animations
-ScapeJs.resume();
+## Event Handling
 
-// Expose the current configuration
-ScapeJs.config();
+### Adding Interactivity
+
+````javascript
+window.ScapeConfig = {
+    // ...other config options
+    onClick: (event) => {
+        console.log('Element clicked:', event.target);
+        // Your click handling code
+    },
+    onHover: (event) => {
+        console.log('Element hovered:', event.target);
+        // Your hover handling code
+    }
+};
+````
+
+## Examples
+
+### Basic Shape Background
+
+````javascript
+document.addEventListener('DOMContentLoaded', () => {
+    window.ScapeConfig = {
+        type: 'shape',
+        shape: 'star',
+        count: 30,
+        fillColor: 'hsla(200, 90%, 60%, 0.8)'
+    };
+});
+````
+
+### Image Background
+
+````javascript
+document.addEventListener('DOMContentLoaded', () => {
+    window.ScapeConfig = {
+        type: 'image',
+        imageUrl: 'logo.png',
+        count: 20,
+        size: 50,
+        opacity: 0.8
+    };
+});
+````
+
+### Interactive Elements
+
+````javascript
+document.addEventListener('DOMContentLoaded', () => {
+    window.ScapeConfig = {
+        type: 'shape',
+        shape: 'heart',
+        count: 15,
+        hoverScale: 1.2,
+        onClick: (e) => {
+            e.target.style.fillColor = 'red';
+        }
+    };
+});
+````
+## Advanced Examples
+
+### Responsive Configuration
+```javascript
+document.addEventListener('DOMContentLoaded', () => {
+    const isMobile = window.innerWidth < 768;
+    
+    window.ScapeConfig = {
+        type: 'shape',
+        shape: 'star',
+        count: isMobile ? 15 : 30,
+        size: isMobile ? 25 : 50,
+        floatDistance: isMobile ? 15 : 30
+    };
+});
 ```
 
-### API Methods Table
+### Interactive Elements
+```javascript
+document.addEventListener('DOMContentLoaded', () => {
+    window.ScapeConfig = {
+        type: 'shape',
+        shape: 'heart',
+        count: 20,
+        hoverScale: 1.2,
+        onClick: (e) => {
+            const element = e.target;
+            element.style.fillColor = 'red';
+            setTimeout(() => {
+                element.style.fillColor = config.fillColor;
+            }, 1000);
+        }
+    };
+});
+```
 
-| Method | Description |
-|--------|-------------|
-| `refresh()` | Refresh the background. |
-| `updateConfig(config)` | Update the configuration dynamically. |
-| `destroy()` | Remove all elements. |
-| `setImage(imageUrl)` | Set a new image URL on command. |
-| `setShape(shapeName)` | Set a new shape on command. |
-| `pause()` | Pause animations. |
-| `resume()` | Resume animations. |
-| `config()` | Expose the current configuration (logs to console). |
----
+### Dynamic Updates Example
 
-## Features
-- Automatic initialization
-- Responsive layout
-- Multiple shape options
-- Image support
-- Floating animations
-- Hover effects
-- Collision detection
+````javascript
+document.addEventListener('DOMContentLoaded', () => {
+    // Change shape on button click
+    document.querySelector('#changeShape').addEventListener('click', () => {
+        Scape.setShape('star');
+    });
 
-## License
-MIT License
+    // Pause/Resume animations on hover
+    const container = document.querySelector('#animationContainer');
+    container.addEventListener('mouseenter', () => {
+        Scape.pause();
+    });
+
+    container.addEventListener('mouseleave', () => {
+        Scape.resume();
+    });
+});
+````
+
+## Best Practices
+
+1. Always wrap initialization code in `DOMContentLoaded`
+2. Use error handling for API calls
+3. Clean up event listeners when removing elements
+4. Test on different screen sizes
+5. Consider performance with high element counts
+
+## Browser Support
+
+- Chrome (latest)
+- Firefox (latest)
+- Safari (latest)
+- Edge (latest)
+- IE11 (limited support)
+
+## Performance Tips
+
+1. Keep element count (`count`) reasonable
+2. Use simpler shapes for better performance
+3. Limit animation complexity
+4. Consider reducing animations on mobile
+5. Use appropriate spacing values
+
+## Troubleshooting
+
+If elements don't appear:
+1. Check console for errors
+2. Verify DOM is loaded
+3. Confirm configuration object is valid
+4. Check z-index conflicts
+5. Verify element positioning

@@ -15,47 +15,162 @@
   <meta property="og:url" content="https://ali-cheikh.github.io/scape.js" />
   <meta property="og:type" content="website" />
   <script src="https://cdn.tailwindcss.com"></script>
+
+  <style>
+    .delay-100 {
+      animation-delay: 0.1s;
+    }
+
+    .delay-200 {
+      animation-delay: 0.2s;
+    }
+
+    .delay-300 {
+      animation-delay: 0.3s;
+    }
+  
+    .delay-400 {
+      animation-delay: 0.4s;
+    }
+
+    /* Pre code styling */
+    pre {
+      position: relative;
+    }
+
+    .copy-btn {
+      position: absolute;
+      top: 0.5rem;
+      right: 0.5rem;
+      opacity: 0;
+      transition: opacity 0.2s;
+    }
+
+    pre:hover .copy-btn {
+      opacity: 1;
+    }
+
+    /* Shape preview styling */
+    .shape-preview {
+      width: 60px;
+      height: 60px;
+      display: inline-block;
+      margin: 5px;
+    }
+
+    /* Responsive tweaks */
+    @media (max-width: 768px) {
+      .hero-title {
+        font-size: 3rem !important;
+      }
+      .hero-subtitle {
+        font-size: 1.2rem !important;
+        padding-left: 0.5rem !important;
+        padding-right: 0.5rem !important;
+      }
+      .hero-subtitle {
+        font-size: 1.1rem !important;
+        padding-left: 1rem !important;
+        padding-right: 1rem !important;
+      }
+    }
+  </style>
 </head>
 
-<body class="bg-gray-900 text-white font-sans min-h-screen flex flex-col items-center justify-center ">
+<body class="bg-gray-900 text-white font-sans min-h-screen flex flex-col">
+  <!-- GitHub Ribbon -->
+  <a href="https://github.com/ali-cheikh/scape.js" class="fixed top-0 right-0 z-50" aria-label="View on GitHub">
+    <img src="https://github.blog/wp-content/uploads/2008/12/forkme_right_darkblue_121621.png?resize=149%2C149"
+      alt="Fork me on GitHub" width="149" height="149">
+  </a>
+
   <!-- Header -->
-  <header
-    class="text-center py-16 bg-gray-800 min-w-full relative min-h-screen flex flex-col items-center justify-center">
+  <header class="text-center py-16 bg-gray-800 w-full relative min-h-screen flex flex-col items-center justify-center">
     <div class="absolute top-0 left-0 w-full h-full bg-gray-900 opacity-50 z-0"></div>
-    <div class="relative z-10 items-center justify-center">
-      <h1 class="text-6xl font-bold fade-in">Scape.js</h1>
-      <p class="mt-4 text-xl text-gray-300 fade-in p-12">
-        Create stunning, interactive backgrounds for your website with ease.
+    <div class="relative z-10 px-4 w-full max-w-4xl mx-auto">
+      <h1 class="text-5xl md:text-6xl font-bold fade-in hero-title">Scape.js</h1>
+      <p class="mt-4 text-xl text-gray-300 fade-in delay-100 hero-subtitle px-4 md:px-12">
+        Lightweight JavaScript library for creating beautiful, interactive backgrounds with 18+ shape options
       </p>
-      <a href="#implementation"
-        class="mt-12 inline-block px-8 py-3 bg-blue-500 text-white rounded-lg hover:bg-blue-600 transition-all fade-in">Get
-        Started</a>
-      <a href="docs"
-        class="mt-12 inline-block px-8 py-3 bg-orange-400 text-white rounded-lg hover:bg-orange-500 transition-all fade-in">read
-        docs
-        Started</a>
+      <div class="flex flex-col sm:flex-row gap-4 justify-center mt-12">
+        <a href="#implementation"
+          class="fade-in delay-200 inline-block px-6 py-3 bg-blue-500 text-white rounded-lg hover:bg-blue-600 transition-all text-lg sm:px-8 sm:py-3">
+          Get Started
+        </a>
+        <a href="#demo"
+          class="fade-in delay-300 inline-block px-6 py-3 bg-purple-500 text-white rounded-lg hover:bg-purple-600 transition-all text-lg sm:px-8 sm:py-3">
+          View Demo
+        </a>
+      </div>
+    </div>
+    <div class="absolute bottom-8 left-0 right-0 flex justify-center fade-in delay-400">
+      <a href="#what-is-this" class="animate-bounce" aria-label="Scroll down">
+        <svg class="w-8 h-8 text-gray-300" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 14l-7 7m0 0l-7-7m7 7V3"></path>
+        </svg>
+      </a>
     </div>
   </header>
-  <main class="max-w-screen-lg mx-auto">
-    <section class="container mx-auto px-6 py-10 fade-in">
-      <h2 class="text-4xl font-bold mb-8">What Is This?</h2>
-      <p class="text-lg text-gray-300 leading-relaxed">
-        The <b>Scape.js</b> is a lightweight JavaScript package that allows you
-        to create beautiful, animated backgrounds for your website. Whether you
-        want floating shapes or custom images, this package has you covered.
-      </p>
+
+
+  <main class="flex-1 w-full max-w-screen-lg mx-auto px-4 sm:px-6">
+    <!-- What Is This? -->
+    <section class="py-12 sm:py-16 fade-in" id="what-is-this">
+      <div class="bg-gray-800/50 rounded-xl p-6 sm:p-8 backdrop-blur-sm">
+        <h2 class="text-3xl sm:text-4xl font-bold mb-6">What Is This?</h2>
+        <div>
+          <p class="text-lg text-gray-300 leading-relaxed mb-6">
+            <b class="text-blue-400">Scape.js</b> is a lightweight (~5KB) JavaScript package that creates beautiful,
+            animated backgrounds for your website. Whether you want floating shapes, custom images, or interactive
+            elements, this package has you covered.
+          </p>
+          <ul class="text-gray-300 space-y-3">
+            <li class="flex items-start">
+              <svg class="w-5 h-5 text-green-400 mr-2 mt-1 flex-shrink-0" fill="none" stroke="currentColor"
+                viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
+              </svg>
+              <span>18+ unique shapes (stars, hearts, fractals and more)</span>
+            </li>
+            <li class="flex items-start">
+              <svg class="w-5 h-5 text-green-400 mr-2 mt-1 flex-shrink-0" fill="none" stroke="currentColor"
+                viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
+              </svg>
+              <span>Custom image support</span>
+            </li>
+            <li class="flex items-start">
+              <svg class="w-5 h-5 text-green-400 mr-2 mt-1 flex-shrink-0" fill="none" stroke="currentColor"
+                viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
+              </svg>
+              <span>Fully configurable animation and appearance</span>
+            </li>
+            <li class="flex items-start">
+              <svg class="w-5 h-5 text-green-400 mr-2 mt-1 flex-shrink-0" fill="none" stroke="currentColor"
+                viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
+              </svg>
+              <span>Interactive elements with hover/click events</span>
+            </li>
+          </ul>
+        </div>
+      </div>
+
     </section>
 
     <!-- How It Works -->
-    <section class="container mx-auto px-6 py-10 fade-in">
-      <h2 class="text-4xl font-bold mb-8">How It Works</h2>
-      <p class="text-lg text-gray-300 leading-relaxed">
-        The package dynamically generates shapes or images and animates them
-        across the screen. You can customize the type, size, color, and
-        animation of the elements.
-      </p>
-      <pre class="bg-gray-800 p-6 rounded-lg mt-8 text-sm">
-      <code class="text-gray-300 text-wrap">
+    <section class="py-12 sm:py-16 fade-in">
+      <div class="bg-gray-800/50 rounded-xl p-6 sm:p-8 backdrop-blur-sm">
+        <h2 class="text-3xl sm:text-4xl font-bold mb-6">How It Works</h2>
+        <p class="text-lg text-gray-300 leading-relaxed">
+          The package dynamically generates shapes or images and animates them
+          across the screen. You can customize the type, size, color, and
+          animation of the elements.
+        </p>
+        <div class="mt-8 relative">
+          <pre class="bg-gray-900 p-4 sm:p-6 rounded-lg overflow-x-auto">
+            <code class="text-gray-300 text-sm sm:text-base">
 // Example Configuration
 window.ScapeConfig = {
   type: 'shape', // 'image' or 'shape'
@@ -66,29 +181,44 @@ window.ScapeConfig = {
   strokeColor: 'rgba(255, 255, 255, 0.5)', // Stroke color
   strokeWidth: 2, // Stroke width
 };
-      </code>
-    </pre>
+            </code>
+          </pre>
+          <button class="copy-btn absolute top-2 right-2 px-2 py-1 bg-gray-700 text-xs rounded hover:bg-gray-600">
+            Copy
+          </button>
+        </div>
+      </div>
     </section>
 
     <!-- Implementation Guide -->
-    <section class="container mx-auto px-6 py-16 fade-in" id="implementation">
-      <h2 class="text-4xl font-bold mb-8">How to Implement</h2>
-      <p class="text-lg text-gray-300 leading-relaxed">
-        Follow these steps to add the <b>Scape.js</b> to your website:
-      </p>
-      <ol class="list-decimal list-inside mt-4 text-lg text-gray-300">
-        <li class="mb-4">Include the script in your HTML file:</li>
-        <pre class="bg-gray-800 p-6 rounded-lg mt-2 text-sm">
-        <code class="text-gray-300 text-wrap">
-&lt;script src="https://scape-js.vercel.app/scape.js"&gt;&lt;/script&gt;
+    <section class="py-12 sm:py-16 fade-in" id="implementation">
+      <div class="bg-gray-800/50 rounded-xl p-6 sm:p-8 backdrop-blur-sm">
+        <h2 class="text-3xl sm:text-4xl font-bold mb-6">How to Implement</h2>
+        <p class="text-lg text-gray-300 leading-relaxed">
+          Follow these steps to add the <b class="text-blue-400">Scape.js</b> to your website:
+        </p>
+
+        <ol class="list-decimal list-inside mt-6 space-y-6">
+          <li class="text-lg text-gray-300">
+            Include the script in your HTML file:
+            <div class="mt-2 relative">
+              <pre class="bg-gray-900 p-4 sm:p-6 rounded-lg overflow-x-auto">
+                <code class="text-gray-300 text-sm sm:text-base">
+&lt;script src="https://cdn.jsdelivr.net/gh/Ali-Cheikh/scape.js@main/scape.js"&gt;&lt;/script&gt;
 &lt;script src="config.js"&gt;&lt;/script&gt;
-        </code>
-      </pre>
-        <li class="mb-4">
-          Create a `config.js` file to customize the background:
-        </li>
-        <pre class="bg-gray-800 p-6 rounded-lg mt-2 text-sm">
-        <code class="text-gray-300 text-wrap">
+                </code>
+              </pre>
+              <button class="copy-btn absolute top-2 right-2 px-2 py-1 bg-gray-700 text-xs rounded hover:bg-gray-600">
+                Copy
+              </button>
+            </div>
+          </li>
+
+          <li class="text-lg text-gray-300">
+            Create a <code class="bg-gray-700 px-2 py-1 rounded">config.js</code> file to customize the background:
+            <div class="mt-2 relative">
+              <pre class="bg-gray-900 p-4 sm:p-6 rounded-lg overflow-x-auto">
+                <code class="text-gray-300 text-sm sm:text-base">
 window.ScapeConfig = {
   type: 'shape',
   shape: 'star',
@@ -98,15 +228,21 @@ window.ScapeConfig = {
   strokeColor: 'rgba(255, 255, 255, 0.5)',
   strokeWidth: 2,
 };
-        </code>
-      </pre>
-        <li class="mb-4">
-          For image-based backgrounds, use this configuration:
-        </li>
-        <pre class="bg-gray-800 p-6 rounded-lg mt-2 text-sm">
-        <code class="text-gray-300 text-wrap">
+                </code>
+              </pre>
+              <button class="copy-btn absolute top-2 right-2 px-2 py-1 bg-gray-700 text-xs rounded hover:bg-gray-600">
+                Copy
+              </button>
+            </div>
+          </li>
+
+          <li class="text-lg text-gray-300">
+            For image-based backgrounds, use this configuration:
+            <div class="mt-2 relative">
+              <pre class="bg-gray-900 p-4 sm:p-6 rounded-lg overflow-x-auto">
+                <code class="text-gray-300 text-sm sm:text-base">
 window.ScapeConfig = {
- type: 'image',
+  type: 'image',
   imageUrl: 'path/to/your/image.png',
   count: 20,
   size: 50,
@@ -117,117 +253,215 @@ window.ScapeConfig = {
   rotationRange: 45,
   opacity: 0.8
 };
-        </code>
-      </pre>
-      </ol><br>
-      <h2 class="text-4xl font-bold mb-8">
-        Available API Methods:
-      </h2>
-      <p class="text-gray-300">
-        You can use the following methods to interact with the background:
-      </p>
-      <pre class="bg-gray-800 p-6 rounded-lg mt-8 text-sm">
-      <code class="text-gray-300 text-wrap">
-      // Refresh the background
-      Scape.refresh();
-
-      // Update configuration
-      Scape.updateConfig(newConfig);
-
-      // Destroy all elements
-      Scape.destroy();
-
-      // Set new image
-      Scape.setImage('path/to/image');
-
-      // Set new shape
-      Scape.setShape('star');
-
-      // Pause animations
-      Scape.pause();
-
-      // Resume animations
-      Scape.resume();
-
-      // Get current config
-      Scape.config();
-        </code>
-      </pre>
-    </section>
-
-    <!-- Introduction -->
-
-
-    <!-- Cool Use Cases -->
-    <section class="container mx-auto px-6 py-16 fade-in">
-      <h2 class="text-4xl font-bold mb-8">Cool Use Cases</h2>
-      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-        <div class="bg-gray-800 p-6 rounded-lg hover:bg-gray-700 transition-all">
-          <h3 class="text-2xl font-bold mb-4">404 Pages</h3>
-          <p class="text-gray-300">
-            Add floating shapes or images to make your 404 pages more engaging.
-          </p>
-        </div>
-        <div class="bg-gray-800 p-6 rounded-lg hover:bg-gray-700 transition-all">
-          <h3 class="text-2xl font-bold mb-4">Landing Pages</h3>
-          <p class="text-gray-300">
-            Use animated backgrounds to grab your visitors' attention.
-          </p>
-        </div>
-        <div class="bg-gray-800 p-6 rounded-lg hover:bg-gray-700 transition-all">
-          <h3 class="text-2xl font-bold mb-4">Portfolios</h3>
-          <p class="text-gray-300">
-            Showcase your creativity with custom shapes and animations.
-          </p>
-        </div>
+                </code>
+              </pre>
+              <button class="copy-btn absolute top-2 right-2 px-2 py-1 bg-gray-700 text-xs rounded hover:bg-gray-600">
+                Copy
+              </button>
+            </div>
+          </li>
+        </ol>
       </div>
+
     </section>
-
-    <!-- Configuration Options -->
-    <section class="container mx-auto px-6 lg:px-0 py-16 fade-in" style="opacity: 1 !important;">
-      <br><br><br>
-      <h2 class="text-4xl font-bold mb-8">Configuration Options</h2>
-      <p class="text-lg text-gray-300 leading-relaxed">
-        Customize the background to fit your needs:
-      </p>
-      <div class="mt-8 lg:mt-0 overflow-x-auto fade-in">
-        <div class="grid grid-cols-1 md:grid-cols-3 gap-8 fade-in-table">
-
-          <!-- Table API Configuration -->
-          <table class="bg-gray-800 rounded-lg overflow-scroll w-full"></table>
-
-          <!-- Table for Shape Configuration -->
-          <table class="bg-gray-800 rounded-lg overflow-scroll"></table>
-
-          <!-- Table for Image Configuration -->
-          <table class="bg-gray-800 rounded-lg overflow-scroll w-full"></table>
-        </div>
-        <hr>
-      </div>
-    </section>
-    <!-- Live Demo -->
-    <section class="container mx-auto px-6 py-16 fade-in">
-      <h2 class="text-4xl font-bold mb-8">Live Demo</h2>
-      <div class="bg-gray-800 p-1 rounded-lg sm:p-6">
-        <p class="text-lg text-gray-300 mb-4 p-2">
-          Here's a live example of the <b>Scape.js</b> in action:
+    <!-- API Documentation -->
+    <section class="py-12 sm:py-16 fade-in">
+      <div class="bg-gray-800/50 rounded-xl p-6 sm:p-8 backdrop-blur-sm">
+        <h2 class="text-3xl sm:text-4xl font-bold mb-6 text-center">API Documentation</h2>
+        <p class="text-center text-gray-300 mb-8 max-w-2xl mx-auto">
+          Control your background dynamically with these methods:
         </p>
-        <div class="relative w-full rounded-lg overflow-hidden aspect-video ">
-          <iframe src="demo/index.html" class="w-full h-full border-none"></iframe>
+
+        <div class="overflow-x-auto">
+          <table class="w-full bg-gray-900 rounded-lg overflow-hidden border border-gray-700">
+            <thead class="bg-gray-700">
+              <tr>
+                <th class="px-6 py-3 text-left">Method</th>
+                <th class="px-6 py-3 text-left">Description</th>
+                <th class="px-6 py-3 text-left">Example</th>
+              </tr>
+            </thead>
+            <tbody class="divide-y divide-gray-700">
+              <tr class="hover:bg-gray-700 transition-colors">
+                <td class="px-6 py-4"><code class="bg-gray-800 px-2 py-1 rounded">refresh()</code></td>
+                <td class="px-6 py-4">Regenerates the background</td>
+                <td class="px-6 py-4"><code class="text-gray-400">Scape.refresh()</code></td>
+              </tr>
+              <tr class="hover:bg-gray-700 transition-colors">
+                <td class="px-6 py-4"><code class="bg-gray-800 px-2 py-1 rounded">updateConfig()</code></td>
+                <td class="px-6 py-4">Updates configuration</td>
+                <td class="px-6 py-4"><code class="text-gray-400">Scape.updateConfig({ shape: 'heart' })</code></td>
+              </tr>
+              <tr class="hover:bg-gray-700 transition-colors">
+                <td class="px-6 py-4"><code class="bg-gray-800 px-2 py-1 rounded">destroy()</code></td>
+                <td class="px-6 py-4">Removes all elements</td>
+                <td class="px-6 py-4"><code class="text-gray-400">Scape.destroy()</code></td>
+              </tr>
+              <tr class="hover:bg-gray-700 transition-colors">
+                <td class="px-6 py-4"><code class="bg-gray-800 px-2 py-1 rounded">setImage()</code></td>
+                <td class="px-6 py-4">Sets new image URL</td>
+                <td class="px-6 py-4"><code class="text-gray-400">Scape.setImage('logo.png')</code></td>
+              </tr>
+              <tr class="hover:bg-gray-700 transition-colors">
+                <td class="px-6 py-4"><code class="bg-gray-800 px-2 py-1 rounded">pause()</code></td>
+                <td class="px-6 py-4">Pauses animations</td>
+                <td class="px-6 py-4"><code class="text-gray-400">Scape.pause()</code></td>
+              </tr>
+              <tr class="hover:bg-gray-700 transition-colors">
+                <td class="px-6 py-4"><code class="bg-gray-800 px-2 py-1 rounded">resume()</code></td>
+                <td class="px-6 py-4">Resumes animations</td>
+                <td class="px-6 py-4"><code class="text-gray-400">Scape.resume()</code></td>
+              </tr>
+            </tbody>
+          </table>
+        </div><br>
+        <p class="text-lg text-gray-300 leading-relaxed">
+           <b class="text-blue-400">Important Note</b> All API methods should be called after the DOM is fully loaded. Wrap your code in an event listener:</p>
+           <div class="mt-2 relative">
+          <pre class="bg-gray-900 p-4 sm:p-6 rounded-lg overflow-x-auto">
+            <code class="text-gray-300 text-sm sm:text-base">
+document.addEventListener('event/action', () => { 
+  // Your Scape.js code here e.g. Scape.refresh() etc
+});
+            </code> </pre>
+          <button class="copy-btn absolute top-2 right-2 px-2 py-1 bg-gray-700 text-xs rounded hover:bg-gray-600">
+            Copy
+          </button>
+        </div><br>
+            <p class="text-lg text-gray-300 leading-relaxed">⚠️ Be cautious when using the destroy() method instead of <code class="bg-gray-900">document.add..</code> use <code class="bg-gray-900">window.add..</code></p>
+      </div>
+    </section>
+
+    <!-- Configuration Reference -->
+    <section class="fade-in" id="configuration-section">
+      <div class="bg-gray-800/50 rounded-xl p-6 sm:p-8 backdrop-blur-sm">
+        <div class="space-y-8">
+          <!-- Tables will be dynamically inserted here by script.js -->
+        </div>
+      </div>
+    </section>
+
+
+    <!-- Live Demo -->
+    <section class="py-12 sm:py-16 fade-in" id="demo">
+      <div class="bg-gray-800/50 rounded-xl p-6 sm:p-8 backdrop-blur-sm">
+        <h2 class="text-3xl sm:text-4xl font-bold mb-6">Live Demo</h2>
+        <p class="text-lg text-gray-300 mb-6">
+          Here's a live example of the <b class="text-blue-400">Scape.js</b> in action:
+        </p>
+        <div class="relative w-full rounded-lg overflow-hidden aspect-video bg-gray-900 border border-gray-700">
+          <iframe src="demo/index.html" class="w-full h-full border-none" title="Scape.js Demo"></iframe>
           <a href="demo/index.html" target="_blank"
-            class="absolute bottom-1 right-4 py-2 px-4 bg-blue-500 text-white rounded-lg hover:bg-blue-600 transition-all duration-300 ease-in-out">Full
-            View</a>
+            class="absolute bottom-4 right-4 py-2 px-4 bg-blue-500 text-white rounded-lg hover:bg-blue-600 transition-all duration-300 ease-in-out">
+            Full View
+          </a>
         </div>
       </div>
     </section>
   </main>
+
+  <!-- Cool Use Cases -->
+  <section class="py-12 sm:py-16 fade-in">
+    <div class="sm:bg-gray-800/50 sm:rounded-xl p-6 sm:p-8 backdrop-blur-sm">
+      <h2 class="text-3xl sm:text-4xl font-bold mb-8 text-center">Use Cases</h2>
+      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+        <div class="bg-gray-800 p-6 rounded-lg hover:bg-gray-700 transition-all border border-gray-700 h-full">
+          <div class="w-12 h-12 bg-blue-500 rounded-lg flex items-center justify-center mb-4">
+            <svg class="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                d="M9.663 17h4.673M12 3v1m6.364 1.636l-.707.707M21 12h-1M4 12H3m3.343-5.657l-.707-.707m2.828 9.9a5 5 0 117.072 0l-.548.547A3.374 3.374 0 0014 18.469V19a2 2 0 11-4 0v-.531c0-.895-.356-1.754-.988-2.386l-.548-.547z">
+              </path>
+            </svg>
+          </div>
+          <h3 class="text-2xl font-bold mb-4">Landing Pages</h3>
+          <p class="text-gray-300">
+            Make your product pages stand out with animated backgrounds that highlight your brand.
+          </p>
+        </div>
+        <div class="bg-gray-800 p-6 rounded-lg hover:bg-gray-700 transition-all border border-gray-700 h-full">
+          <div class="w-12 h-12 bg-purple-500 rounded-lg flex items-center justify-center mb-4">
+            <svg class="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                d="M10 20l4-16m4 4l4 4-4 4M6 16l-4-4 4-4"></path>
+            </svg>
+          </div>
+          <h3 class="text-2xl font-bold mb-4">404 Pages</h3>
+          <p class="text-gray-300">
+            Turn error pages into engaging experiences with floating shapes that react to user interaction.
+          </p>
+        </div>
+        <div class="bg-gray-800 p-6 rounded-lg hover:bg-gray-700 transition-all border border-gray-700 h-full">
+          <div class="w-12 h-12 bg-green-500 rounded-lg flex items-center justify-center mb-4">
+            <svg class="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                d="M21 12a9 9 0 01-9 9m9-9a9 9 0 00-9-9m9 9H3m9 9a9 9 0 01-9-9m9 9c1.657 0 3-4.03 3-9s-1.343-9-3-9m0 18c-1.657 0-3-4.03-3-9s1.343-9 3-9m-9 9a9 9 0 019-9">
+              </path>
+            </svg>
+          </div>
+          <h3 class="text-2xl font-bold mb-4">Portfolios</h3>
+          <p class="text-gray-300">
+            Showcase your creativity with custom shapes and animations that reflect your personal style.
+          </p>
+        </div>
+      </div>
+    </div>
+  </section>
+
   <!-- Footer -->
-  <footer class="text-center py-8 bg-gray-800 fade-in w-full">
-    <p class="text-gray-300">Made with ❤️ by Ali Cheikh</p>
+  <footer class="text-center py-12 bg-gray-800/80 backdrop-blur-sm fade-in mt-auto w-full">
+    <div class="max-w-screen-xl mx-auto px-4">
+      <h3 class="text-2xl font-bold mb-6">Read Docs</h3>
+      <a href="https://github.com/Ali-Cheikh/scape.js/blob/main/Documentation.md"
+        class="inline-block px-8 py-3 bg-blue-500 text-white rounded-lg hover:bg-blue-600 transition-all mb-8">
+        Get Started with Scape.js
+      </a>
+      <div class="flex justify-center gap-6 mb-8">
+        <a href="https://github.com/ali-cheikh/scape.js" class="text-gray-300 hover:text-white" aria-label="GitHub">
+          <svg class="w-6 h-6" fill="currentColor" viewBox="0 0 24 24">
+            <path fill-rule="evenodd" clip-rule="evenodd"
+              d="M12 2C6.477 2 2 6.484 2 12.017c0 4.425 2.865 8.18 6.839 9.504.5.092.682-.217.682-.483 0-.237-.008-.868-.013-1.703-2.782.605-3.369-1.343-3.369-1.343-.454-1.158-1.11-1.466-1.11-1.466-.908-.62.069-.608.069-.608 1.003.07 1.531 1.032 1.531 1.032.892 1.53 2.341 1.088 2.91.832.092-.647.35-1.088.636-1.338-2.22-.253-4.555-1.113-4.555-4.951 0-1.093.39-1.988 1.029-2.688-.103-.253-.446-1.272.098-2.65 0 0 .84-.27 2.75 1.026A9.564 9.564 0 0112 6.844c.85.004 1.705.115 2.504.337 1.909-1.296 2.747-1.027 2.747-1.027.546 1.379.202 2.398.1 2.651.64.7 1.028 1.595 1.028 2.688 0 3.848-2.339 4.695-4.566 4.943.359.309.678.92.678 1.855 0 1.338-.012 2.419-.012 2.747 0 .268.18.58.688.482A10.019 10.019 0 0022 12.017C22 6.484 17.522 2 12 2z">
+            </path>
+          </svg>
+        </a>
+        <a href="https:ali-cheikh.com" class="text-gray-300 hover:text-white" aria-label="Twitter">
+            <svg class="w-6 h-6" fill="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" 
+              d="M21 12a9 9 0 01-9 9m9-9a9 9 0 00-9-9m9 9H3m9 9a9 9 0 01-9-9m9 9c1.657 0 3-4.03 3-9s-1.343-9-3-9m0 18c-1.657 0-3-4.03-3-9s1.343-9 3-9m-9 9a9 9 0 019-9">
+            </path>
+            </svg>
+        </a>
+      </div>
+      <p class="text-gray-300">Made with ❤️ by Ali Cheikh</p>
+      <p class="text-gray-500 text-sm mt-2">MIT Licensed | v1.0.1</p>
+    </div>
   </footer>
 
-  <script src="scape.js"></script>
   <script src="js/script.js"></script>
+  <script>
+    // Initialize animations
+    document.addEventListener('DOMContentLoaded', () => {
+      const fadeElements = document.querySelectorAll('.fade-in');
+      fadeElements.forEach((el, index) => {
+        // Apply staggered delays
+        if (index > 0) {
+          el.style.animationDelay = `${index * 0.51}s`;
+        }
+      });
+      fadeElements.forEach((el) => {
+        el.classList.add('animate-fade-in');
+      });
+    });
+    
+    window.addEventListener('load', () => {
+      // Mobile detection example
+      if (window.innerWidth < 768) {
+        ScapeJs.destroy();
+      } else {
+        ScapeJs.refresh();
+      }
+    });
+  </script>
+  <script src="scape.js"></script>
 </body>
 
 </html>
