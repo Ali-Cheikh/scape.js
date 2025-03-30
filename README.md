@@ -18,7 +18,8 @@ document.addEventListener('DOMContentLoaded', () => {
 ## Installation
 
 ```html
-<script src="https://cdn.jsdelivr.net/gh/Ali-Cheikh/scape.js@main/scape.js"></script>
+<script src="https://ali-cheikh.github.io/scape.js"></script>
+<script src="config.js"></script>
 ```
 
 ## Basic Usage
