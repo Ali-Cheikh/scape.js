@@ -2,7 +2,7 @@ const ScapeJs = (function () {
   // Default configuration
   const githubImg = "https://github.githubassets.com/images/modules/logos_page/GitHub-Mark.png";
   const defaultConfig = {
-    type: "shape", // 'image' or 'shape'
+    type: "image", // 'image' or 'shape'
     imageUrl: githubImg, // URL for the image
     shape: "heart", // Shape type (circle, hexagon, heart, diamond, star, triangle, pentagon, fly, flower, spiral, splash, tesseract, boom, wave, clover, ripple, shell, fractal)
     count: 30, // Number of elements
