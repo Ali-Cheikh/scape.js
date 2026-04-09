@@ -1,0 +1,10 @@
+User-agent: *
+Allow: /
+Disallow: /node_modules/
+Disallow: /demo/
+
+Sitemap: https://github.com/Ali-Cheikh/scape.js
+
+# LLM discovery
+Allow: /llms.txt
+Allow: /llms-full.txt

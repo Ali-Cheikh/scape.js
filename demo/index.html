@@ -1,15 +1,16 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Learner Page | Demo</title>
-  <meta name="description" content="Create stunning, interactive backgrounds for your website with ease.">
-  <meta name="keywords" content="scape.js, background, shapes, images, animations, website">
+  <meta name="robots" content="index, follow">
+  <title>Scape.js Interactive Demo | Test & Edit Configuration</title>
+  <meta name="description" content="Interactive demo for Scape.js. Edit the configuration in real-time and see animated backgrounds change instantly. Test all shapes and customization options.">
+  <meta name="keywords" content="scape.js, demo, interactive, background editor, animation, test">
   <meta name="author" content="Ali Cheikh">
-  <link rel="icon" href="favicon.ico" type="image/x-icon">
-  <meta property="og:title" content="Scape.js">
+  <link rel="canonical" href="https://github.com/Ali-Cheikh/scape.js">
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><defs><style>.s{fill:%231e40af;}</style></defs><circle cx='50' cy='30' r='15' class='s'/><polygon points='50,70 35,55 65,55' class='s'/><path d='M50 85 Q40 75 50 60 Q60 75 50 85' class='s'/></svg>" type="image/svg+xml" />
   <script src="https://cdn.tailwindcss.com"></script>
   <!-- CodeMirror CSS and JS -->
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.63.0/codemirror.min.css" />
@@ -18,16 +19,14 @@
   <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.63.0/mode/javascript/javascript.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.63.0/addon/edit/matchbrackets.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.63.0/addon/edit/closebrackets.min.js"></script>
-
 </head>
 
 <body class="bg-gray-900 min-h-screen flex flex-col items-center justify-center gap-6 p-4">
   <h1 class="text-4xl font-bold text-white p-8 text-center">Edit the Config and See the Magic ✨</h1>
 
   <!-- Code Editor -->
-  <div class="w-full max-w-xl bg-gray-800 rounded-lg overflow-hidden">
-    <textarea id="codeEditor" class="hidden">
-// Edit the configuration below
+  <div class="w-full max-w-xl bg-gray-800 rounded-lg overflow-hidden shadow-lg">
+    <textarea id="codeEditor" class="hidden">// Edit the configuration below
 window.ScapeConfig = {
   type: 'shape',
   shape: 'star',
@@ -40,10 +39,14 @@ window.ScapeConfig = {
 };</textarea>
   </div>
 
+  <!-- Update Button -->
+  <button id="updateBtn" class="px-6 py-3 bg-blue-500 hover:bg-blue-600 text-white font-bold rounded-lg transition duration-300">
+    Update Background
+  </button>
+
   <!-- Include the ScapeJs script -->
-  <script src="config.js"></script>
   <script src="https://scape-js.vercel.app/scape.js"></script>
-</body>
+  <script src="config.js"></script>
 </body>
 
 </html>

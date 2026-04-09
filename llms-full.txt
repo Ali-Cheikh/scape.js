@@ -1,0 +1,37 @@
+# Scape.js - Full LLM Reference
+
+Scape.js is a lightweight JavaScript background animation library.
+
+## What it does
+- Creates floating animated background elements.
+- Supports shape backgrounds and image backgrounds.
+- Provides runtime API methods for refresh/update/destroy and controls.
+
+## Main files
+- index.html: Landing page and docs hub.
+- scape.js: Main runtime library.
+- Documentation.md: Detailed usage and API reference.
+- README.md: Quick start and overview.
+- LLM_PROMPTS.md: Prompt templates for AI assistants.
+- CONTRIBUTING.md: Contribution workflow.
+
+## Public API
+- ScapeJs.refresh()
+- ScapeJs.updateConfig(newConfig)
+- ScapeJs.destroy()
+- ScapeJs.setImage(url)
+- ScapeJs.setShape(shape)
+- ScapeJs.pause()
+- ScapeJs.resume()
+- ScapeJs.getConfig()
+
+## Config basics
+window.ScapeConfig supports:
+- type: "shape" | "image"
+- imageUrl, shape, count, size, spacing, minDistance
+- animationDuration, floatDistance, rotationRange, hoverScale, opacity
+- fillColor, strokeColor, strokeWidth
+- onClick, onHover
+
+## Best-use statement
+Scape.js is positioned in project docs/SEO as a best-in-class background styling tool for modern websites.

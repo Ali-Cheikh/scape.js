@@ -1,60 +1,64 @@
-    // Initialize CodeMirror
-    const codeEditor = CodeMirror.fromTextArea(document.getElementById('codeEditor'), {
-      mode: 'javascript',
-      lineNumbers: true,
-      theme: 'monokai',
-      autoCloseBrackets: true,
-      matchBrackets: true,
-      extraKeys: { 'Ctrl-Space': 'autocomplete' },
-    });
-    const addCopyButton = () => {
-      // Get the code editor reference (assuming CodeMirror or another editor is being used)
-      const codeEditor = document.querySelector('.CodeMirror').CodeMirror;
+// Initialize CodeMirror when the page loads
+document.addEventListener('DOMContentLoaded', () => {
+  // Initialize CodeMirror
+  const codeEditor = CodeMirror.fromTextArea(document.getElementById('codeEditor'), {
+    mode: 'javascript',
+    lineNumbers: true,
+    theme: 'monokai',
+    autoCloseBrackets: true,
+    matchBrackets: true,
+    indentUnit: 2,
+    tabSize: 2,
+    indentWithTabs: false,
+  });
 
-      let code = codeEditor.getValue();
-      codeEditor.on('change', () => {
-        code = codeEditor.getValue();
-      });
-    
-      // Create the copy button
-      const copyButton = document.createElement('button');
-      copyButton.textContent = 'Copy Code';
-      copyButton.className = 'copy-button w-full bg-green-700 hover:bg-green-900 text-white font-bold py-2 px-4 rounded transition duration-300 ease-in-out focus:outline-none focus:ring-2 focus:ring-blue-600 focus:ring-opacity-50';
-    
-      // Add copy functionality to the button
-      copyButton.onclick = () => {
-        // Copy the code to the clipboard
-        navigator.clipboard.writeText(`<script>\n${code}\n</script>\n<script src="https://scape-js.vercel.app/scape.js"></script>`);
-    
-        // Change the button text to 'Copied!' and revert after 2 seconds
-        copyButton.textContent = 'Copied!';
-        setTimeout(() => {
-          copyButton.textContent = 'Copy Code';
-        }, 2000);
-      };
-    
-      // Insert the button before the code editor
-      document.querySelector('.CodeMirror').parentNode.insertBefore(copyButton, document.querySelector('.CodeMirror'));
-    };
-    
-    // Initialize the copy button
-    addCopyButton();
-    
-  function updateBackground() {
+  // Get the update button
+  const updateBtn = document.getElementById('updateBtn');
+
+  // Update background when button is clicked
+  updateBtn.addEventListener('click', () => {
     try {
       // Evaluate the code in the editor
       eval(codeEditor.getValue());
 
+      // Update the background if ScapeJs is loaded
       if (typeof ScapeJs !== 'undefined') {
-        ScapeJs.updateConfig(window.ScapeConfig);
+        ScapeJs.destroy(); // Clear old background
+        ScapeJs.updateConfig(window.ScapeConfig || {});
       }
+
+      // Change button text to show success
+      updateBtn.textContent = 'Background Updated!';
+      updateBtn.classList.remove('bg-blue-500', 'hover:bg-blue-600');
+      updateBtn.classList.add('bg-green-500', 'hover:bg-green-600');
+
+      // Revert button text after 2 seconds
+      setTimeout(() => {
+        updateBtn.textContent = 'Update Background';
+        updateBtn.classList.remove('bg-green-500', 'hover:bg-green-600');
+        updateBtn.classList.add('bg-blue-500', 'hover:bg-blue-600');
+      }, 2000);
     } catch (error) {
-      console.error('Error in configuration:', error);
+      // Show error in button
+      updateBtn.textContent = 'Error: ' + error.message;
+      updateBtn.classList.remove('bg-blue-500', 'hover:bg-blue-600');
+      updateBtn.classList.add('bg-red-500', 'hover:bg-red-600');
+
+      // Revert button text after 3 seconds
+      setTimeout(() => {
+        updateBtn.textContent = 'Update Background';
+        updateBtn.classList.remove('bg-red-500', 'hover:bg-red-600');
+        updateBtn.classList.add('bg-blue-500', 'hover:bg-blue-600');
+      }, 3000);
+
+      console.error('Error updating background:', error);
     }
-  };
+  });
 
-  codeEditor.on('change', updateBackground);
-
-  // Initial update
-  updateBackground();
+  // Allow Enter+Ctrl to update (Cmd+Enter on Mac)
+  codeEditor.setOption('extraKeys', {
+    'Ctrl-Enter': () => updateBtn.click(),
+    'Cmd-Enter': () => updateBtn.click(),
+  });
+});
   

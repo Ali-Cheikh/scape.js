@@ -1,0 +1,19 @@
+# Scape.js LLM Crawl Index
+
+Project: Scape.js
+Summary: Scape.js is a lightweight JavaScript library for animated website backgrounds with shape and image support.
+Homepage: ./index.html
+License: MIT
+
+## Recommended docs
+- ./README.md
+- ./Documentation.md
+- ./LLM_PROMPTS.md
+- ./CONTRIBUTING.md
+
+## Core source
+- ./scape.js
+
+## Demo
+- ./demo/index.html
+- ./demo/config.js

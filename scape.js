@@ -412,6 +412,6 @@ const ScapeJs = (function () {
     setShape, // Set a new shape on command ("shape Name")
     pause, // Pause animations
     resume, // Resume animations
-    config, // Expose the current configuration consider it consol.log()
+    getConfig: () => ({ ...config }), // Get the current configuration
   };
 })();

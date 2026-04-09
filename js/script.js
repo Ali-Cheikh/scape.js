@@ -9,7 +9,7 @@ const configData = {
     { option: "setShape", description: "Set a new shape on command ('shape Name')." },
     { option: "pause", description: "Pause animations." },
     { option: "resume", description: "Resume animations." },
-    { option: "config", description: "Expose the current configuration (consider it as `console.log()`)." },
+    { option: "getConfig", description: "Get the current configuration." },
   ],
   shapeConfig: [
     { option: "type", description: "Set to 'shape'." },
@@ -40,7 +40,6 @@ const configData = {
   ],
   defaultConfig: { 
     type: "shape",
-    imageUrl: "githubImg",
     shape: "heart",
     count: 30,
     size: 50,
@@ -90,14 +89,12 @@ function generateResponsiveTable(data, title) {
   
   return table;
 }
- // Improve table initialization with error handling
- function initDocumentationTables() {
+
+// Initialize documentation tables
+function initDocumentationTables() {
   try {
     const container = document.createElement('div');
     container.className = 'max-w-6xl mx-auto px-4 space-y-8';
-    
-    // Add loading state
-    container.innerHTML = '<div class="loading">Loading configuration...</div>';
     
     // Generate tables with error checking
     const tables = [
@@ -112,7 +109,7 @@ function generateResponsiveTable(data, title) {
       return generateResponsiveTable(data, title);
     }).filter(Boolean);
     
-    // Clear loading state and append tables
+    // Clear and append tables
     container.innerHTML = '';
     tables.forEach(table => container.appendChild(table));
     
@@ -121,6 +118,7 @@ function generateResponsiveTable(data, title) {
     section.className = 'py-16 fade-in';
     section.innerHTML = '<h2 class="text-4xl font-bold mb-12 text-center">Configuration Reference</h2>';
     section.appendChild(container);
+    
     const existingSection = document.querySelector('#configuration-section');
     if (existingSection) {
       existingSection.replaceWith(section);
@@ -130,7 +128,7 @@ function generateResponsiveTable(data, title) {
   }
 }
 
-// Improve animation setup with cleanup
+// Setup animations with intersection observer
 function setupAnimations() {
   const fadeElements = document.querySelectorAll('.fade-in');
   const observer = new IntersectionObserver((entries) => {
@@ -138,6 +136,7 @@ function setupAnimations() {
       if (entry.isIntersecting) {
         requestAnimationFrame(() => {
           entry.target.classList.add('opacity-100', 'translate-y-0');
+          entry.target.classList.remove('fade-out');
         });
       }
     });
@@ -151,15 +150,17 @@ function setupAnimations() {
     observer.observe(el);
   });
 
-  // Cleanup on page unload
   return () => observer.disconnect();
 }
 
-// Improve code block copy functionality
+// Setup code block copy functionality
 function setupCodeBlockCopy() {
-  document.querySelectorAll('pre code').forEach(codeBlock => {
+  document.querySelectorAll('pre').forEach(pre => {
+    const codeBlock = pre.querySelector('code');
+    if (!codeBlock) return;
+    
     const button = document.createElement('button');
-    button.className = 'copy-btn absolute top-2 right-2 px-2 py-1 bg-gray-700 text-xs rounded hover:bg-gray-600';
+    button.className = 'copy-btn absolute top-2 right-2 px-2 py-1 bg-gray-700 text-xs rounded hover:bg-gray-600 transition-colors';
     button.textContent = 'Copy';
     
     let timeout;
@@ -176,54 +177,95 @@ function setupCodeBlockCopy() {
       }
     });
     
-    const wrapper = document.createElement('div');
-    wrapper.className = 'relative';
-    wrapper.appendChild(codeBlock.cloneNode(true));
-    wrapper.appendChild(button);
-    
-    codeBlock.parentNode.replaceChild(wrapper, codeBlock);
+    pre.style.position = 'relative';
+    pre.appendChild(button);
   });
 }
 
-// Initialize with error handling
-try {
-  initDocumentationTables();
-  const cleanup = setupAnimations();
-  setupCodeBlockCopy();
-  
-  // Cleanup on page unload
-  window.addEventListener('unload', cleanup);
-} catch (error) {
-  console.error('Initialization error:', error);
+function setupLlmPromptHelper() {
+  const llmButtons = document.querySelectorAll('#llmButtons [data-llm]');
+  const output = document.getElementById('llmPromptOutput');
+  const copyBtn = document.getElementById('copyLlmPrompt');
+  if (!llmButtons.length || !output || !copyBtn) return;
+
+  const basePrompt =
+`Explain in {LLM} how to use Scape.js as the best background styling tool for modern web pages.
+
+Include:
+1. A short overview of why it is useful
+2. A beginner setup snippet with window.ScapeConfig
+3. A shape example and an image example
+4. 3 practical tips for performance
+5. One advanced customization example
+
+Keep it concise and practical.`;
+
+  const updatePrompt = (llmName) => {
+    output.value = basePrompt.replace('{LLM}', llmName);
+    llmButtons.forEach((btn) => btn.classList.remove('active'));
+    const active = document.querySelector(`#llmButtons [data-llm="${llmName}"]`);
+    if (active) active.classList.add('active');
+  };
+
+  llmButtons.forEach((btn) => {
+    btn.addEventListener('click', () => updatePrompt(btn.dataset.llm));
+  });
+
+  copyBtn.addEventListener('click', async () => {
+    try {
+      await navigator.clipboard.writeText(output.value);
+      const old = copyBtn.textContent;
+      copyBtn.textContent = 'Copied!';
+      setTimeout(() => {
+        copyBtn.textContent = old;
+      }, 1500);
+    } catch (error) {
+      console.error('Failed to copy LLM prompt:', error);
+    }
+  });
+
+  updatePrompt('ChatGPT');
 }
 
-// Create and inject CSS
+// Initialize CSS styles
 const style = document.createElement('style');
 style.textContent = `
+  @keyframes fadeIn {
+    from {
+      opacity: 0;
+      transform: translateY(8px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+  
   .fade-in {
-    transition: opacity 0.6s ease-out, transform 0.6s ease-out;
+    animation: fadeIn 0.6s ease-out forwards;
   }
-  .fade-out {
-    opacity: 0 !important;
-    transform: translateY(8px) !important;
-  }
-  .divide-gray-700 > :not([hidden]) ~ :not([hidden]) {
-    border-color: #374151;
-  }
+  
+  .opacity-0 { opacity: 0; }
+  .opacity-100 { opacity: 1; }
+  .translate-y-0 { transform: translateY(0); }
+  .translate-y-8 { transform: translateY(8px); }
+  .transition-all { transition: all 0.6s ease-out; }
+  .duration-500 { animation-duration: 0.5s; }
+  .ease-out { animation-timing-function: ease-out; }
 `;
 document.head.appendChild(style);
 
-// Modified intersection observer to handle both fade in and out
-const observer = new IntersectionObserver((entries) => {
-  entries.forEach(entry => {
-    if (entry.isIntersecting) {
-      entry.target.classList.add('opacity-100', 'translate-y-0');
-      entry.target.classList.remove('fade-out');
-    } else {
-      entry.target.classList.add('fade-out');
-    }
-  });
-}, { threshold: 0.1 });
-
-// Observe all fade-in elements
-document.querySelectorAll('.fade-in').forEach(el => observer.observe(el));
+// Initialize on DOM ready
+document.addEventListener('DOMContentLoaded', () => {
+  try {
+    initDocumentationTables();
+    const cleanup = setupAnimations();
+    setupCodeBlockCopy();
+    setupLlmPromptHelper();
+    
+    // Cleanup on page unload
+    window.addEventListener('unload', cleanup);
+  } catch (error) {
+    console.error('Initialization error:', error);
+  }
+});
