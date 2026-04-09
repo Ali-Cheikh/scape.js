@@ -61,28 +61,28 @@ const configData = {
 // Modern table generator with responsive design
 function generateResponsiveTable(data, title) {
   const table = document.createElement('div');
-  table.className = 'bg-gray-800 rounded-lg overflow-hidden shadow-lg mb-8';
+  table.className = 'mb-8 overflow-hidden rounded-3xl border border-slate-800 bg-slate-900/60 shadow-2xl shadow-slate-950/30';
   
   table.innerHTML = `
     <div class="overflow-x-auto">
-      <table class="w-full">
-        <thead>
-          <tr class="bg-gray-700 text-left">
-            <th class="px-6 py-4 font-semibold">Option</th>
-            <th class="px-6 py-4 font-semibold">Description</th>
+      <table class="w-full text-left">
+        <thead class="bg-slate-950/80 text-slate-200">
+          <tr>
+            <th class="px-6 py-4 text-sm font-semibold uppercase tracking-wider">Option</th>
+            <th class="px-6 py-4 text-sm font-semibold uppercase tracking-wider">Description</th>
           </tr>
         </thead>
-        <tbody class="divide-y divide-gray-700">
+        <tbody class="divide-y divide-slate-800 text-slate-300">
           ${data.map(item => `
-            <tr class="hover:bg-gray-700 transition-colors">
-              <td class="px-6 py-4 font-mono text-blue-300">${item.option}</td>
+            <tr class="transition-colors hover:bg-slate-800/60">
+              <td class="px-6 py-4 font-mono text-sky-300">${item.option}</td>
               <td class="px-6 py-4">${item.description}</td>
             </tr>
           `).join('')}
         </tbody>
       </table>
     </div>
-    <div class="bg-gray-900 px-6 py-3 text-sm text-gray-400">
+    <div class="border-t border-slate-800 bg-slate-950/70 px-6 py-3 text-sm text-slate-400">
       ${title} Configuration Options
     </div>
   `;
@@ -146,7 +146,7 @@ function setupAnimations() {
   });
 
   fadeElements.forEach(el => {
-    el.classList.add('opacity-0', 'translate-y-8', 'transition-all', 'duration-500', 'ease-out');
+    el.classList.add('opacity-0', 'translate-y-6', 'transition-all', 'duration-500', 'ease-out');
     observer.observe(el);
   });
 
@@ -159,9 +159,15 @@ function setupCodeBlockCopy() {
     const codeBlock = pre.querySelector('code');
     if (!codeBlock) return;
     
-    const button = document.createElement('button');
-    button.className = 'copy-btn absolute top-2 right-2 px-2 py-1 bg-gray-700 text-xs rounded hover:bg-gray-600 transition-colors';
-    button.textContent = 'Copy';
+    pre.classList.add('group');
+    let button = pre.querySelector('button.copy-btn');
+    if (!button) {
+      button = document.createElement('button');
+      button.textContent = 'Copy';
+      pre.appendChild(button);
+    }
+
+    button.className = 'copy-btn absolute right-2 top-2 rounded-md bg-slate-700 px-2 py-1 text-xs text-white opacity-0 transition-opacity duration-200 group-hover:opacity-100 hover:bg-slate-600';
     
     let timeout;
     button.addEventListener('click', async () => {
@@ -202,9 +208,9 @@ Keep it concise and practical.`;
 
   const updatePrompt = (llmName) => {
     output.value = basePrompt.replace('{LLM}', llmName);
-    llmButtons.forEach((btn) => btn.classList.remove('active'));
+    llmButtons.forEach((btn) => btn.classList.remove('active', 'border-sky-400/80', 'bg-sky-500/15', 'text-white', 'ring-1', 'ring-sky-400/40'));
     const active = document.querySelector(`#llmButtons [data-llm="${llmName}"]`);
-    if (active) active.classList.add('active');
+    if (active) active.classList.add('active', 'border-sky-400/80', 'bg-sky-500/15', 'text-white', 'ring-1', 'ring-sky-400/40');
   };
 
   llmButtons.forEach((btn) => {
@@ -258,13 +264,19 @@ document.head.appendChild(style);
 // Initialize on DOM ready
 document.addEventListener('DOMContentLoaded', () => {
   try {
-    initDocumentationTables();
-    const cleanup = setupAnimations();
-    setupCodeBlockCopy();
-    setupLlmPromptHelper();
-    
-    // Cleanup on page unload
-    window.addEventListener('unload', cleanup);
+    const runDeferredSetup = () => {
+      initDocumentationTables();
+      const cleanup = setupAnimations();
+      setupCodeBlockCopy();
+      setupLlmPromptHelper();
+      window.addEventListener('unload', cleanup);
+    };
+
+    if ('requestIdleCallback' in window) {
+      window.requestIdleCallback(runDeferredSetup, { timeout: 1500 });
+    } else {
+      window.setTimeout(runDeferredSetup, 0);
+    }
   } catch (error) {
     console.error('Initialization error:', error);
   }

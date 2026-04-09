@@ -1,52 +1,903 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta name="robots" content="index, follow">
-  <title>Scape.js Interactive Demo | Test & Edit Configuration</title>
-  <meta name="description" content="Interactive demo for Scape.js. Edit the configuration in real-time and see animated backgrounds change instantly. Test all shapes and customization options.">
-  <meta name="keywords" content="scape.js, demo, interactive, background editor, animation, test">
-  <meta name="author" content="Ali Cheikh">
-  <link rel="canonical" href="https://github.com/Ali-Cheikh/scape.js">
-  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><defs><style>.s{fill:%231e40af;}</style></defs><circle cx='50' cy='30' r='15' class='s'/><polygon points='50,70 35,55 65,55' class='s'/><path d='M50 85 Q40 75 50 60 Q60 75 50 85' class='s'/></svg>" type="image/svg+xml" />
-  <script src="https://cdn.tailwindcss.com"></script>
-  <!-- CodeMirror CSS and JS -->
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.63.0/codemirror.min.css" />
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.63.0/theme/monokai.min.css">
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.63.0/codemirror.min.js"></script>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.63.0/mode/javascript/javascript.min.js"></script>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.63.0/addon/edit/matchbrackets.min.js"></script>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.63.0/addon/edit/closebrackets.min.js"></script>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Scape.js — Interactive Demo</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"/>
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=IBM+Plex+Mono:ital,wght@0,400;0,500;1,400&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet"/>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.63.0/codemirror.min.css"/>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.63.0/theme/monokai.min.css"/>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.63.0/codemirror.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.63.0/mode/javascript/javascript.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.63.0/addon/edit/matchbrackets.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.63.0/addon/edit/closebrackets.min.js"></script>
+<style>
+  :root {
+    --acid: #c8ff00;
+    --ink: #0b0b0b;
+    --dim: #131313;
+    --panel: #181818;
+    --mid: #242424;
+    --border: rgba(255,255,255,0.07);
+    --muted: #5a5a5a;
+    --text: #d4d2cc;
+  }
+
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  html, body {
+    height: 100%;
+    background: var(--ink);
+    color: var(--text);
+    font-family: 'DM Sans', sans-serif;
+    font-weight: 300;
+    overflow: hidden;
+  }
+
+  /* ── LAYOUT ── */
+  .app {
+    display: grid;
+    grid-template-rows: 48px 1fr;
+    height: 100vh;
+    position: relative;
+    z-index: 2;
+  }
+
+  .background-element {
+    z-index: 0 !important;
+    pointer-events: none !important;
+  }
+
+  /* ── TOPBAR ── */
+  .topbar {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0 1.25rem;
+    border-bottom: 1px solid var(--border);
+    background: var(--dim);
+    gap: 1rem;
+    flex-shrink: 0;
+  }
+
+  .topbar-brand {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 1.15rem;
+    letter-spacing: 0.12em;
+    color: var(--acid);
+    white-space: nowrap;
+  }
+
+  .topbar-label {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 0.6rem;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--muted);
+  }
+
+  .topbar-status {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 0.6rem;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    color: var(--muted);
+  }
+
+  .status-dot {
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+    background: var(--muted);
+    transition: background 0.3s;
+  }
+  .status-dot.live { background: var(--acid); box-shadow: 0 0 6px var(--acid); }
+  .status-dot.error { background: #ff4444; }
+
+  .topbar-actions {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+  }
+
+  .back-link {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 0.6rem;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: var(--muted);
+    text-decoration: none;
+    padding: 0.35rem 0.8rem;
+    border: 1px solid var(--border);
+    transition: all 0.2s;
+  }
+  .back-link:hover { color: #fff; border-color: rgba(255,255,255,0.2); }
+
+  /* ── MAIN SPLIT ── */
+  .split {
+    display: grid;
+    grid-template-columns: 420px 1fr;
+    overflow: hidden;
+  }
+
+  .split.editor-collapsed {
+    grid-template-columns: 1fr;
+  }
+
+  .split.editor-collapsed .editor-panel {
+    display: none;
+  }
+
+  /* ── EDITOR PANEL ── */
+  .editor-panel {
+    display: flex;
+    flex-direction: column;
+    border-right: 1px solid var(--border);
+    background: var(--dim);
+    overflow: hidden;
+  }
+
+  .panel-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0.75rem 1rem;
+    border-bottom: 1px solid var(--border);
+    flex-shrink: 0;
+  }
+
+  .panel-title {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 0.62rem;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--muted);
+    display: flex;
+    align-items: center;
+    gap: 0.6rem;
+  }
+  .panel-title::before {
+    content: '';
+    display: block;
+    width: 8px; height: 1px;
+    background: var(--acid);
+  }
+
+  .tab-row {
+    display: flex;
+    border-bottom: 1px solid var(--border);
+    flex-shrink: 0;
+  }
+  .tab {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 0.6rem;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    padding: 0.6rem 1rem;
+    color: var(--muted);
+    cursor: pointer;
+    border-bottom: 2px solid transparent;
+    transition: all 0.15s;
+    background: none;
+    border-top: none;
+    border-left: none;
+    border-right: none;
+    white-space: nowrap;
+  }
+  .tab:hover { color: #fff; }
+  .tab.active { color: var(--acid); border-bottom-color: var(--acid); }
+
+  .tab-close {
+    margin-left: auto;
+    color: #8a8a8a;
+    border-left: 1px solid var(--border);
+  }
+
+  .tab-close:hover {
+    color: #fff;
+  }
+
+  .editor-wrap {
+    flex: 1;
+    overflow: hidden;
+    position: relative;
+    display: flex;
+    flex-direction: column;
+  }
+
+  .config-tabs {
+    display: flex;
+    align-items: center;
+    gap: 1px;
+    background: var(--border);
+    border-bottom: 1px solid var(--border);
+    flex-shrink: 0;
+    overflow-x: auto;
+  }
+
+  .config-tab-item {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 0.5rem 0.7rem;
+    border: none;
+    background: var(--mid);
+    color: var(--muted);
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 0.56rem;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    cursor: pointer;
+    white-space: nowrap;
+  }
+
+  .config-tab-item.active {
+    background: rgba(200,255,0,0.12);
+    color: var(--acid);
+  }
+
+  .config-tab-close {
+    border: none;
+    background: transparent;
+    color: inherit;
+    cursor: pointer;
+    opacity: 0.7;
+    font-size: 0.72rem;
+    line-height: 1;
+    padding: 0;
+  }
+
+  .config-tab-close:hover {
+    opacity: 1;
+  }
+
+  #codeEditor {
+    flex: 1;
+  }
+
+  /* CodeMirror overrides */
+  .CodeMirror {
+    height: 100% !important;
+    font-family: 'IBM Plex Mono', monospace !important;
+    font-size: 0.78rem !important;
+    line-height: 1.7 !important;
+    background: #0f0f0f !important;
+    color: #c9c9c9 !important;
+  }
+  .CodeMirror-scroll { padding-bottom: 2rem; }
+  .CodeMirror-gutters { background: #0f0f0f !important; border-right: 1px solid var(--border) !important; }
+  .CodeMirror-linenumber { color: #333 !important; }
+  .CodeMirror-cursor { border-left: 2px solid var(--acid) !important; }
+  .CodeMirror-selected { background: rgba(200,255,0,0.08) !important; }
+
+  /* ── ACTION BAR ── */
+  .action-bar {
+    display: flex;
+    gap: 1px;
+    background: var(--border);
+    border-top: 1px solid var(--border);
+    flex-shrink: 0;
+  }
+
+  .btn {
+    flex: 1;
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 0.65rem;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    padding: 0.85rem 1rem;
+    border: none;
+    cursor: pointer;
+    transition: all 0.15s;
+    font-weight: 500;
+  }
+
+  .btn-run {
+    background: var(--acid);
+    color: var(--ink);
+    flex: 2;
+  }
+  .btn-run:hover { opacity: 0.85; }
+  .btn-run:active { transform: scale(0.98); }
+
+  .btn-random {
+    background: var(--mid);
+    color: var(--muted);
+  }
+  .btn-random:hover { background: #2e2e2e; color: #fff; }
+
+  .btn-reset {
+    background: var(--mid);
+    color: var(--muted);
+  }
+  .btn-reset:hover { background: #2e2e2e; color: #fff; }
+
+  .btn.success { background: #1a3a1a !important; color: #4caf50 !important; }
+  .btn.error-state { background: #3a1a1a !important; color: #f44336 !important; }
+
+  /* ── SHORTCUT HINT ── */
+  .shortcut-hint {
+    padding: 0.5rem 1rem;
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 0.55rem;
+    letter-spacing: 0.15em;
+    color: #2e2e2e;
+    text-transform: uppercase;
+    text-align: center;
+    border-top: 1px solid var(--border);
+    flex-shrink: 0;
+  }
+  kbd {
+    background: var(--mid);
+    color: var(--muted);
+    padding: 0.1rem 0.4rem;
+    font-family: inherit;
+    font-size: inherit;
+  }
+
+  /* ── PRESETS PANEL ── */
+  .presets-panel {
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+  }
+  .presets-list {
+    flex: 1;
+    overflow-y: auto;
+    padding: 0.75rem;
+    display: flex;
+    flex-direction: column;
+    gap: 1px;
+  }
+  .presets-list::-webkit-scrollbar { width: 4px; }
+  .presets-list::-webkit-scrollbar-track { background: transparent; }
+  .presets-list::-webkit-scrollbar-thumb { background: var(--border); }
+
+  .preset-item {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0.65rem 0.75rem;
+    cursor: pointer;
+    transition: background 0.15s;
+    border: 1px solid transparent;
+  }
+  .preset-item:hover { background: var(--mid); border-color: var(--border); }
+  .preset-item.active { border-color: var(--acid); background: rgba(200,255,0,0.04); }
+  .preset-name {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 0.68rem;
+    letter-spacing: 0.1em;
+    color: var(--text);
+  }
+  .preset-item.active .preset-name { color: var(--acid); }
+  .preset-tag {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 0.55rem;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--muted);
+    background: var(--mid);
+    padding: 0.15rem 0.5rem;
+  }
+
+  /* ── PREVIEW PANEL ── */
+  .preview-panel {
+    position: relative;
+    background: transparent;
+    overflow: hidden;
+  }
+
+  .open-editor-btn {
+    position: absolute;
+    top: 1rem;
+    left: 1rem;
+    z-index: 20;
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 0.58rem;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    padding: 0.45rem 0.7rem;
+    color: var(--acid);
+    border: 1px solid rgba(200,255,0,0.35);
+    background: rgba(11,11,11,0.8);
+    cursor: pointer;
+    display: none;
+  }
+
+  .split.editor-collapsed .open-editor-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.3rem;
+  }
+
+  .preview-overlay {
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+    z-index: 10;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    padding: 1.25rem;
+  }
+  .preview-tl {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 0.6rem;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: rgba(255,255,255,0.15);
+  }
+  .preview-br {
+    display: flex;
+    justify-content: flex-end;
+  }
+  .preview-shape-badge {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 0.6rem;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--acid);
+    opacity: 0.5;
+    transition: opacity 0.3s;
+  }
+  .preview-shape-badge.visible { opacity: 1; }
+
+  /* grid overlay on preview */
+  .preview-grid {
+    position: absolute;
+    inset: 0;
+    z-index: 1;
+    background-image:
+      linear-gradient(var(--border) 1px, transparent 1px),
+      linear-gradient(90deg, var(--border) 1px, transparent 1px);
+    background-size: 60px 60px;
+    pointer-events: none;
+    opacity: 0.4;
+  }
+
+  /* error toast */
+  .toast {
+    position: absolute;
+    bottom: 1.5rem;
+    left: 50%;
+    transform: translateX(-50%) translateY(60px);
+    z-index: 100;
+    background: #1a0a0a;
+    border: 1px solid #ff4444;
+    color: #ff6666;
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 0.65rem;
+    letter-spacing: 0.08em;
+    padding: 0.75rem 1.25rem;
+    max-width: 360px;
+    text-align: center;
+    transition: transform 0.3s ease;
+    pointer-events: none;
+  }
+  .toast.show { transform: translateX(-50%) translateY(0); }
+
+  /* ── SCROLLBARS ── */
+  * { scrollbar-width: thin; scrollbar-color: var(--mid) transparent; }
+</style>
 </head>
+<body>
 
-<body class="bg-gray-900 min-h-screen flex flex-col items-center justify-center gap-6 p-4">
-  <h1 class="text-4xl font-bold text-white p-8 text-center">Edit the Config and See the Magic ✨</h1>
+<div class="app">
 
-  <!-- Code Editor -->
-  <div class="w-full max-w-xl bg-gray-800 rounded-lg overflow-hidden shadow-lg">
-    <textarea id="codeEditor" class="hidden">// Edit the configuration below
-window.ScapeConfig = {
+  <!-- TOPBAR -->
+  <div class="topbar">
+    <div style="display:flex;align-items:center;gap:1rem">
+      <span class="topbar-brand">Scape.js</span>
+      <span class="topbar-label">Interactive Demo</span>
+    </div>
+    <div class="topbar-status">
+      <div class="status-dot live" id="statusDot"></div>
+      <span id="statusText">Live</span>
+    </div>
+    <div class="topbar-actions">
+      <a href="../index.html" class="back-link">← Docs</a>
+    </div>
+  </div>
+
+  <!-- SPLIT -->
+  <div class="split">
+
+    <!-- EDITOR PANEL -->
+    <div class="editor-panel">
+      <div class="tab-row">
+        <button class="tab active" data-tab="editor" onclick="switchTab('editor',this)">Config Editor</button>
+        <button class="tab" data-tab="presets" onclick="switchTab('presets',this)">Presets</button>
+        <button class="tab tab-close" id="closeEditorBtn" title="Close code panel">Close</button>
+      </div>
+
+      <!-- Editor tab -->
+      <div id="tab-editor" class="editor-wrap">
+        <div class="config-tabs" id="configTabs"></div>
+        <textarea id="codeEditor">window.ScapeConfig = {
   type: 'shape',
   shape: 'star',
   count: 20,
   size: 30,
   spacing: 200,
-  fillColor: 'yellow',
-  strokeColor: 'rgba(0, 0, 0, 0.5)',
-  strokeWidth: 2
+  fillColor: 'hsla(214, 95%, 70%, 0.55)',
+  strokeColor: 'rgba(255, 255, 255, 0.12)',
+  strokeWidth: 1.5,
+  animationDuration: '6s',
+  floatDistance: 18,
+  rotationRange: 180,
+  opacity: 0.8
 };</textarea>
+      </div>
+
+      <!-- Presets tab -->
+      <div id="tab-presets" class="presets-panel" style="display:none">
+        <div class="panel-header">
+          <span class="panel-title">Shape Presets</span>
+        </div>
+        <div class="presets-list" id="presetsList"></div>
+      </div>
+
+      <!-- Action bar -->
+      <div class="action-bar">
+        <button class="btn btn-random" id="randomBtn" title="Generate random config">⟳ Random</button>
+        <button class="btn btn-run" id="updateBtn">▶ Run  <span style="opacity:0.5;font-size:0.55rem">Ctrl+Enter</span></button>
+        <button class="btn btn-reset" id="resetBtn">↺ Reset</button>
+      </div>
+      <div class="shortcut-hint"><kbd>Ctrl</kbd> + <kbd>Enter</kbd> to run</div>
+    </div>
+
+    <!-- PREVIEW PANEL -->
+    <div class="preview-panel" id="previewPanel">
+      <button class="open-editor-btn" id="openEditorBtn" title="Open code panel">◀ Editor</button>
+      <div class="preview-grid"></div>
+      <div class="preview-overlay">
+        <div class="preview-tl">● Preview</div>
+        <div class="preview-br">
+          <div class="preview-shape-badge" id="shapeBadge"></div>
+        </div>
+      </div>
+    </div>
+
   </div>
+</div>
 
-  <!-- Update Button -->
-  <button id="updateBtn" class="px-6 py-3 bg-blue-500 hover:bg-blue-600 text-white font-bold rounded-lg transition duration-300">
-    Update Background
-  </button>
+<!-- Toast -->
+<div class="toast" id="toast"></div>
 
-  <!-- Include the ScapeJs script -->
-  <script src="https://scape-js.vercel.app/scape.js"></script>
-  <script src="config.js"></script>
+<script src="https://scape-js.vercel.app/scape.js"></script>
+<script src="config.js"></script>
+
+<script>
+// ── PRESETS ──
+const PRESETS = [
+  {
+    name: 'Stars (default)', tag: 'shape',
+    config: { type:'shape', shape:'star', count:20, size:30, spacing:200, fillColor:'hsla(214,95%,70%,0.55)', strokeColor:'rgba(255,255,255,0.12)', strokeWidth:1.5, animationDuration:'6s', floatDistance:18, rotationRange:180, opacity:0.8 }
+  },
+  {
+    name: 'Hearts', tag: 'shape',
+    config: { type:'shape', shape:'heart', count:25, size:28, spacing:160, fillColor:'hsla(340,90%,65%,0.5)', strokeColor:'rgba(255,100,150,0.2)', strokeWidth:1, animationDuration:'5s', floatDistance:22, rotationRange:15, opacity:0.85 }
+  },
+  {
+    name: 'Hexagons', tag: 'shape',
+    config: { type:'shape', shape:'hexagon', count:18, size:36, spacing:220, fillColor:'hsla(170,80%,45%,0.2)', strokeColor:'hsla(170,80%,60%,0.4)', strokeWidth:2, animationDuration:'8s', floatDistance:12, rotationRange:60, opacity:0.9 }
+  },
+  {
+    name: 'Triangles', tag: 'shape',
+    config: { type:'shape', shape:'triangle', count:30, size:22, spacing:150, fillColor:'hsla(280,85%,65%,0.25)', strokeColor:'hsla(280,85%,75%,0.5)', strokeWidth:1.5, animationDuration:'7s', floatDistance:20, rotationRange:360, opacity:0.8 }
+  },
+  {
+    name: 'Diamonds', tag: 'shape',
+    config: { type:'shape', shape:'diamond', count:22, size:26, spacing:180, fillColor:'hsla(45,100%,60%,0.3)', strokeColor:'rgba(255,220,100,0.4)', strokeWidth:1.5, animationDuration:'6s', floatDistance:15, rotationRange:45, opacity:0.85 }
+  },
+  {
+    name: 'Circles', tag: 'shape',
+    config: { type:'shape', shape:'circle', count:35, size:18, spacing:130, fillColor:'rgba(99,102,241,0.2)', strokeColor:'rgba(139,143,255,0.4)', strokeWidth:1, animationDuration:'9s', floatDistance:25, rotationRange:0, opacity:0.75 }
+  },
+  {
+    name: 'Octagons', tag: 'shape',
+    config: { type:'shape', shape:'octagon', count:15, size:40, spacing:250, fillColor:'hsla(200,90%,55%,0.15)', strokeColor:'hsla(200,90%,70%,0.35)', strokeWidth:2, animationDuration:'10s', floatDistance:10, rotationRange:90, opacity:0.9 }
+  },
+  {
+    name: 'Crosses', tag: 'shape',
+    config: { type:'shape', shape:'cross', count:28, size:20, spacing:170, fillColor:'rgba(255,80,80,0.18)', strokeColor:'rgba(255,120,120,0.35)', strokeWidth:1.5, animationDuration:'7s', floatDistance:16, rotationRange:90, opacity:0.8 }
+  },
+  {
+    name: 'Dense Stars', tag: 'dense',
+    config: { type:'shape', shape:'star', count:60, size:14, spacing:80, fillColor:'hsla(55,100%,65%,0.35)', strokeColor:'rgba(255,240,100,0.15)', strokeWidth:1, animationDuration:'4s', floatDistance:10, rotationRange:360, opacity:0.9 }
+  },
+  {
+    name: 'Slow Giants', tag: 'ambient',
+    config: { type:'shape', shape:'hexagon', count:8, size:80, spacing:350, fillColor:'rgba(99,102,241,0.06)', strokeColor:'rgba(139,143,255,0.15)', strokeWidth:1, animationDuration:'18s', floatDistance:30, rotationRange:20, opacity:0.95 }
+  },
+];
+
+// ── SHAPES for random generator ──
+const RAND_SHAPES = ['star','heart','hexagon','triangle','diamond','circle','octagon','cross','square','pentagon'];
+const RAND_PALETTES = [
+  { fill:'hsla(214,95%,70%,0.5)', stroke:'rgba(100,180,255,0.25)' },
+  { fill:'hsla(340,90%,65%,0.45)', stroke:'rgba(255,100,150,0.2)' },
+  { fill:'hsla(160,80%,50%,0.35)', stroke:'rgba(80,220,160,0.3)' },
+  { fill:'hsla(280,85%,65%,0.3)', stroke:'rgba(200,140,255,0.25)' },
+  { fill:'hsla(45,100%,60%,0.4)', stroke:'rgba(255,220,80,0.3)' },
+  { fill:'hsla(0,90%,65%,0.35)', stroke:'rgba(255,100,100,0.25)' },
+  { fill:'hsla(190,95%,55%,0.35)', stroke:'rgba(80,220,240,0.25)' },
+  { fill:'hsla(120,75%,55%,0.3)', stroke:'rgba(100,220,100,0.25)' },
+  { fill:'rgba(200,255,0,0.25)', stroke:'rgba(180,255,0,0.2)' },
+];
+
+function randomConfig() {
+  const shape = RAND_SHAPES[Math.floor(Math.random() * RAND_SHAPES.length)];
+  const palette = RAND_PALETTES[Math.floor(Math.random() * RAND_PALETTES.length)];
+  const count = 10 + Math.floor(Math.random() * 40);
+  const size = 10 + Math.floor(Math.random() * 50);
+  const spacing = 80 + Math.floor(Math.random() * 200);
+  const duration = (3 + Math.floor(Math.random() * 10)) + 's';
+  const float = 8 + Math.floor(Math.random() * 28);
+  const rotation = [0, 15, 45, 90, 180, 360][Math.floor(Math.random() * 6)];
+  const sw = (0.5 + Math.random() * 2).toFixed(1);
+  return { type:'shape', shape, count, size, spacing, fillColor:palette.fill, strokeColor:palette.stroke, strokeWidth:parseFloat(sw), animationDuration:duration, floatDistance:float, rotationRange:rotation, opacity:0.8 };
+}
+
+function configToString(cfg) {
+  const lines = Object.entries(cfg).map(([k,v]) => {
+    const val = typeof v === 'string' ? `'${v}'` : v;
+    return `  ${k}: ${val}`;
+  });
+  return `window.ScapeConfig = {\n${lines.join(',\n')}\n};`;
+}
+
+const DEFAULT_CONFIG = `window.ScapeConfig = {
+  type: 'shape',
+  shape: 'star',
+  count: 20,
+  size: 30,
+  spacing: 200,
+  fillColor: 'hsla(214, 95%, 70%, 0.55)',
+  strokeColor: 'rgba(255, 255, 255, 0.12)',
+  strokeWidth: 1.5,
+  animationDuration: '6s',
+  floatDistance: 18,
+  rotationRange: 180,
+  opacity: 0.8
+};`;
+
+let configTabsState = [
+  { id: 'config-default', title: 'Current Config', code: DEFAULT_CONFIG }
+];
+let activeConfigTabId = 'config-default';
+
+function renderConfigTabs() {
+  const tabsEl = document.getElementById('configTabs');
+  if (!tabsEl) return;
+
+  tabsEl.innerHTML = '';
+
+  configTabsState.forEach((tab) => {
+    const tabBtn = document.createElement('button');
+    tabBtn.className = 'config-tab-item' + (tab.id === activeConfigTabId ? ' active' : '');
+    tabBtn.type = 'button';
+    tabBtn.innerHTML = `<span>${tab.title}</span>`;
+    tabBtn.addEventListener('click', () => activateConfigTab(tab.id));
+
+    if (configTabsState.length > 1) {
+      const closeBtn = document.createElement('button');
+      closeBtn.className = 'config-tab-close';
+      closeBtn.type = 'button';
+      closeBtn.title = 'Close tab';
+      closeBtn.textContent = '×';
+      closeBtn.addEventListener('click', (e) => {
+        e.stopPropagation();
+        closeConfigTab(tab.id);
+      });
+      tabBtn.appendChild(closeBtn);
+    }
+
+    tabsEl.appendChild(tabBtn);
+  });
+}
+
+function saveActiveTabCode() {
+  if (!editor) return;
+  const active = configTabsState.find((t) => t.id === activeConfigTabId);
+  if (active) active.code = editor.getValue();
+}
+
+function activateConfigTab(tabId) {
+  saveActiveTabCode();
+  const nextTab = configTabsState.find((t) => t.id === tabId);
+  if (!nextTab || !editor) return;
+
+  activeConfigTabId = tabId;
+  editor.setValue(nextTab.code);
+  renderConfigTabs();
+  runConfig();
+}
+
+function openConfigTab(title, code) {
+  saveActiveTabCode();
+  const id = `config-${Date.now()}-${Math.floor(Math.random() * 1000)}`;
+  configTabsState.push({ id, title, code });
+  activeConfigTabId = id;
+  renderConfigTabs();
+  switchTab('editor');
+  editor.setValue(code);
+  runConfig();
+}
+
+function closeConfigTab(tabId) {
+  if (configTabsState.length === 1) return;
+
+  const currentIndex = configTabsState.findIndex((t) => t.id === tabId);
+  if (currentIndex === -1) return;
+
+  const wasActive = configTabsState[currentIndex].id === activeConfigTabId;
+  configTabsState.splice(currentIndex, 1);
+
+  if (wasActive) {
+    const fallbackIndex = Math.max(0, currentIndex - 1);
+    const fallbackTab = configTabsState[fallbackIndex];
+    activeConfigTabId = fallbackTab.id;
+    editor.setValue(fallbackTab.code);
+    runConfig();
+  }
+
+  renderConfigTabs();
+}
+
+// ── INIT CODEMIRROR ──
+let editor;
+document.addEventListener('DOMContentLoaded', () => {
+  const split = document.querySelector('.split');
+  const closeEditorBtn = document.getElementById('closeEditorBtn');
+  const openEditorBtn = document.getElementById('openEditorBtn');
+
+  function closeEditorPanel() {
+    split.classList.add('editor-collapsed');
+  }
+
+  function openEditorPanel() {
+    split.classList.remove('editor-collapsed');
+    if (editor) {
+      editor.refresh();
+    }
+  }
+
+  closeEditorBtn.addEventListener('click', closeEditorPanel);
+  openEditorBtn.addEventListener('click', openEditorPanel);
+
+  editor = CodeMirror.fromTextArea(document.getElementById('codeEditor'), {
+    mode: 'javascript',
+    lineNumbers: true,
+    theme: 'monokai',
+    autoCloseBrackets: true,
+    matchBrackets: true,
+    indentUnit: 2,
+    tabSize: 2,
+    indentWithTabs: false,
+    extraKeys: {
+      'Ctrl-Enter': () => document.getElementById('updateBtn').click(),
+      'Cmd-Enter': () => document.getElementById('updateBtn').click(),
+    }
+  });
+
+  editor.on('change', () => {
+    const active = configTabsState.find((t) => t.id === activeConfigTabId);
+    if (active) active.code = editor.getValue();
+  });
+
+  renderConfigTabs();
+
+  // Build presets list
+  const list = document.getElementById('presetsList');
+  PRESETS.forEach((p, i) => {
+    const item = document.createElement('div');
+    item.className = 'preset-item' + (i === 0 ? ' active' : '');
+    item.innerHTML = `<span class="preset-name">${p.name}</span><span class="preset-tag">${p.tag}</span>`;
+    item.addEventListener('click', () => {
+      document.querySelectorAll('.preset-item').forEach(el => el.classList.remove('active'));
+      item.classList.add('active');
+      openConfigTab(p.name, configToString(p.config));
+    });
+    list.appendChild(item);
+  });
+
+  // Run initial config
+  runConfig();
+});
+
+// ── RUN CONFIG ──
+function runConfig() {
+  const dot = document.getElementById('statusDot');
+  const statusText = document.getElementById('statusText');
+  const updateBtn = document.getElementById('updateBtn');
+  const shapeBadge = document.getElementById('shapeBadge');
+
+  try {
+    eval(editor.getValue());
+
+    if (typeof ScapeJs !== 'undefined') {
+      ScapeJs.destroy();
+      ScapeJs.updateConfig(window.ScapeConfig || {});
+    }
+
+    // Update status
+    dot.className = 'status-dot live';
+    statusText.textContent = 'Live';
+    updateBtn.classList.add('success');
+    setTimeout(() => updateBtn.classList.remove('success'), 1200);
+
+    // Show shape name
+    if (window.ScapeConfig && window.ScapeConfig.shape) {
+      shapeBadge.textContent = window.ScapeConfig.shape;
+      shapeBadge.classList.add('visible');
+    }
+
+  } catch (err) {
+    dot.className = 'status-dot error';
+    statusText.textContent = 'Error';
+    updateBtn.classList.add('error-state');
+    setTimeout(() => updateBtn.classList.remove('error-state'), 2000);
+    showToast(err.message);
+    console.error('Scape config error:', err);
+  }
+}
+
+// ── RANDOM ──
+document.getElementById('randomBtn').addEventListener('click', () => {
+  const cfg = randomConfig();
+  editor.setValue(configToString(cfg));
+
+  // deselect presets
+  document.querySelectorAll('.preset-item').forEach(el => el.classList.remove('active'));
+
+  runConfig();
+  flashBtn(document.getElementById('randomBtn'), '✓ Generated');
+});
+
+// ── RUN BUTTON ──
+document.getElementById('updateBtn').addEventListener('click', runConfig);
+
+document.getElementById('resetBtn').addEventListener('click', () => {
+  editor.setValue(DEFAULT_CONFIG);
+  runConfig();
+  document.querySelectorAll('.preset-item').forEach((el, i) => {
+    el.classList.toggle('active', i === 0);
+  });
+});
+
+// ── TAB SWITCH ──
+function switchTab(tab, el) {
+  document.querySelectorAll('.tab[data-tab]').forEach(t => t.classList.remove('active'));
+  const targetTabBtn = el || document.querySelector(`.tab[data-tab="${tab}"]`);
+  if (targetTabBtn) targetTabBtn.classList.add('active');
+  document.getElementById('tab-editor').style.display = tab === 'editor' ? 'flex' : 'none';
+  document.getElementById('tab-presets').style.display = tab === 'presets' ? 'flex' : 'none';
+  if (tab === 'editor' && editor) {
+    editor.refresh();
+    editor.focus();
+  }
+}
+
+// ── TOAST ──
+function showToast(msg) {
+  const t = document.getElementById('toast');
+  t.textContent = '⚠ ' + msg;
+  t.classList.add('show');
+  setTimeout(() => t.classList.remove('show'), 3500);
+}
+
+// ── FLASH BUTTON ──
+function flashBtn(btn, label) {
+  const orig = btn.textContent;
+  btn.textContent = label;
+  setTimeout(() => btn.textContent = orig, 1200);
+}
+</script>
 </body>
-
 </html>
