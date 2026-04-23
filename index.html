@@ -27,7 +27,18 @@
       <a href="/demo/index.html">Demo</a>
       <a href="https://github.com/Ali-Cheikh/scape.js" target="_blank">GitHub</a>
     </div>
+    <button class="mobile-nav-toggle" id="mobileNavToggle" aria-expanded="false" aria-controls="mobileNavMenu">
+      Menu
+    </button>
     <a href="https://cdn.jsdelivr.net/gh/Ali-Cheikh/scape.js@main/scape.js" class="nav-cta">Get CDN Link</a>
+    <div class="mobile-nav" id="mobileNavMenu">
+      <a href="#how">How it works</a>
+      <a href="#shapes">Shapes</a>
+      <a href="#api">API</a>
+      <a href="/demo/index.html">Demo</a>
+      <a href="https://github.com/Ali-Cheikh/scape.js" target="_blank">GitHub</a>
+      <a href="https://cdn.jsdelivr.net/gh/Ali-Cheikh/scape.js@main/scape.js" class="mobile-nav-cta">Get CDN Link</a>
+    </div>
   </nav>
 
   <!-- HERO -->
@@ -332,6 +343,32 @@
       
       // Render shapes grid
       ShapeRenderer.renderGrid('shapes-grid');
+
+      // Mobile nav toggle
+      const nav = document.querySelector('nav');
+      const mobileToggle = document.getElementById('mobileNavToggle');
+      const mobileMenu = document.getElementById('mobileNavMenu');
+
+      if (nav && mobileToggle && mobileMenu) {
+        mobileToggle.addEventListener('click', () => {
+          const isOpen = nav.classList.toggle('nav-open');
+          mobileToggle.setAttribute('aria-expanded', String(isOpen));
+        });
+
+        mobileMenu.querySelectorAll('a').forEach((link) => {
+          link.addEventListener('click', () => {
+            nav.classList.remove('nav-open');
+            mobileToggle.setAttribute('aria-expanded', 'false');
+          });
+        });
+
+        window.addEventListener('resize', () => {
+          if (window.innerWidth > 900) {
+            nav.classList.remove('nav-open');
+            mobileToggle.setAttribute('aria-expanded', 'false');
+          }
+        });
+      }
     });
   </script>
 </body>

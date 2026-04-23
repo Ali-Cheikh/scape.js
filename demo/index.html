@@ -483,6 +483,152 @@
 
   /* ── SCROLLBARS ── */
   * { scrollbar-width: thin; scrollbar-color: var(--mid) transparent; }
+
+  /* ── RESPONSIVE ── */
+  @media (max-width: 1100px) {
+    .split {
+      grid-template-columns: 360px 1fr;
+    }
+
+    .btn {
+      font-size: 0.6rem;
+      padding: 0.75rem 0.7rem;
+    }
+  }
+
+  @media (max-width: 900px) {
+    html,
+    body {
+      overflow: auto;
+    }
+
+    .app {
+      height: auto;
+      min-height: 100dvh;
+      grid-template-rows: auto 1fr;
+    }
+
+    .topbar {
+      padding: 0.7rem 0.9rem;
+      flex-wrap: wrap;
+      row-gap: 0.45rem;
+    }
+
+    .topbar-status {
+      font-size: 0.55rem;
+      letter-spacing: 0.12em;
+    }
+
+    .topbar-actions {
+      margin-left: auto;
+    }
+
+    .split {
+      grid-template-columns: 1fr;
+      grid-template-rows: minmax(38dvh, 44dvh) minmax(360px, 1fr);
+      overflow: visible;
+    }
+
+    .split.editor-collapsed {
+      grid-template-columns: 1fr;
+      grid-template-rows: 1fr;
+    }
+
+    .preview-panel {
+      border-bottom: 1px solid var(--border);
+    }
+
+    .editor-panel {
+      border-right: none;
+    }
+
+    .tab-row,
+    .config-tabs {
+      overflow-x: auto;
+      scrollbar-width: none;
+    }
+
+    .tab-row::-webkit-scrollbar,
+    .config-tabs::-webkit-scrollbar {
+      display: none;
+    }
+
+    .tab,
+    .config-tab-item {
+      flex: 0 0 auto;
+    }
+
+    .action-bar {
+      gap: 0;
+    }
+
+    .btn-run {
+      flex: 1.4;
+    }
+
+    .shortcut-hint {
+      font-size: 0.5rem;
+      letter-spacing: 0.1em;
+      padding: 0.45rem 0.65rem;
+    }
+  }
+
+  @media (max-width: 640px) {
+    .topbar-brand {
+      font-size: 1rem;
+    }
+
+    .topbar-label {
+      font-size: 0.5rem;
+      letter-spacing: 0.14em;
+    }
+
+    .topbar-status {
+      display: none;
+    }
+
+    .back-link {
+      padding: 0.28rem 0.55rem;
+      font-size: 0.55rem;
+      letter-spacing: 0.11em;
+    }
+
+    .split {
+      grid-template-rows: minmax(34dvh, 40dvh) minmax(320px, 1fr);
+    }
+
+    .tab {
+      font-size: 0.53rem;
+      padding: 0.5rem 0.75rem;
+    }
+
+    .config-tab-item {
+      font-size: 0.5rem;
+      padding: 0.44rem 0.58rem;
+      gap: 0.35rem;
+    }
+
+    .btn {
+      font-size: 0.54rem;
+      letter-spacing: 0.08em;
+      padding: 0.62rem 0.45rem;
+    }
+
+    .preview-overlay {
+      padding: 0.8rem;
+    }
+
+    .toast {
+      left: 1rem;
+      right: 1rem;
+      max-width: none;
+      transform: translateY(60px);
+    }
+
+    .toast.show {
+      transform: translateY(0);
+    }
+  }
 </style>
 </head>
 <body>

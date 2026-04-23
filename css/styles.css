@@ -75,6 +75,56 @@
   }
   .nav-cta:hover { opacity: 0.85; }
 
+  .mobile-nav-toggle {
+    display: none;
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 0.64rem;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--muted);
+    border: 1px solid var(--border);
+    background: transparent;
+    padding: 0.42rem 0.72rem;
+    cursor: pointer;
+  }
+
+  .mobile-nav {
+    position: absolute;
+    top: calc(100% + 1px);
+    left: 1.2rem;
+    right: 1.2rem;
+    display: none;
+    flex-direction: column;
+    background: rgba(11,11,11,0.96);
+    border: 1px solid var(--border);
+    padding: 0.6rem;
+    gap: 0.35rem;
+  }
+
+  .mobile-nav a {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 0.64rem;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--muted);
+    border: 1px solid transparent;
+    padding: 0.56rem 0.62rem;
+  }
+
+  .mobile-nav a:hover {
+    color: #fff;
+    border-color: var(--border);
+  }
+
+  .mobile-nav-cta {
+    color: var(--acid) !important;
+    border-color: rgba(200,255,0,0.35) !important;
+  }
+
+  nav.nav-open .mobile-nav {
+    display: flex;
+  }
+
   /* ── HERO ── */
   .hero {
     position: relative;
@@ -560,12 +610,185 @@
   .d5 { animation-delay: 0.7s; }
 
   /* ── RESPONSIVE ── */
+  @media (max-width: 1200px) {
+    nav,
+    .section-inner,
+    footer {
+      padding-left: 1.5rem;
+      padding-right: 1.5rem;
+    }
+
+    .hero {
+      padding: 7.5rem 1.5rem 3.5rem;
+      gap: 1.5rem;
+    }
+
+    .how-grid,
+    .api-grid {
+      gap: 2.25rem;
+    }
+  }
+
   @media (max-width: 900px) {
-    .hero { grid-template-columns: 1fr; padding-top: 7rem; }
-    .hero-right { display: none; }
-    .how-grid, .api-grid { grid-template-columns: 1fr; }
-    .use-grid { grid-template-columns: 1fr; }
-    .shapes-header { flex-direction: column; align-items: flex-start; gap: 1rem; }
-    footer { flex-direction: column; align-items: flex-start; }
-    .nav-links { display: none; }
+    body {
+      cursor: default;
+    }
+
+    nav {
+      padding-top: 0.9rem;
+      padding-bottom: 0.9rem;
+    }
+
+    .nav-links {
+      display: none;
+    }
+
+    .mobile-nav-toggle {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      margin-left: auto;
+      margin-right: 0.6rem;
+    }
+
+    .nav-cta {
+      font-size: 0.62rem;
+      padding: 0.45rem 0.8rem;
+    }
+
+    .hero {
+      grid-template-columns: 1fr;
+      min-height: auto;
+      padding-top: 6.5rem;
+      gap: 1rem;
+    }
+
+    .hero-right {
+      display: none;
+    }
+
+    .hero-sub {
+      margin-top: 1.2rem;
+      margin-bottom: 1.8rem;
+    }
+
+    .hero-actions {
+      flex-wrap: wrap;
+      gap: 0.75rem;
+    }
+
+    .hero-actions .btn-primary,
+    .hero-actions .btn-ghost {
+      width: 100%;
+      text-align: center;
+      padding: 0.75rem 1rem;
+    }
+
+    .marquee-track {
+      padding: 0.75rem 0;
+    }
+
+    .marquee-inner span {
+      font-size: 0.92rem;
+      padding: 0 1.2rem;
+      letter-spacing: 0.14em;
+    }
+
+    .how-section,
+    .shapes-section,
+    .api-section,
+    .use-section {
+      padding: 5rem 0;
+    }
+
+    .how-grid,
+    .api-grid,
+    .use-grid {
+      grid-template-columns: 1fr;
+    }
+
+    .shapes-header {
+      flex-direction: column;
+      align-items: flex-start;
+      gap: 1rem;
+    }
+
+    .method-item {
+      flex-direction: column;
+      align-items: flex-start;
+    }
+
+    .method-desc {
+      text-align: left;
+    }
+
+    .use-card {
+      padding: 1.8rem 1.4rem;
+    }
+
+    footer {
+      flex-direction: column;
+      align-items: flex-start;
+      padding-top: 2.6rem;
+      padding-bottom: 2.6rem;
+      gap: 1rem;
+    }
+  }
+
+  @media (max-width: 640px) {
+    nav,
+    .section-inner,
+    footer {
+      padding-left: 1rem;
+      padding-right: 1rem;
+    }
+
+    .nav-brand {
+      font-size: 1.25rem;
+    }
+
+    .nav-cta {
+      display: none;
+    }
+
+    .mobile-nav {
+      left: 1rem;
+      right: 1rem;
+      padding: 0.48rem;
+    }
+
+    .hero {
+      padding-top: 5.8rem;
+      padding-bottom: 2.4rem;
+    }
+
+    .hero-title {
+      font-size: clamp(4rem, 23vw, 6.2rem);
+    }
+
+    .hero-sub {
+      font-size: 0.74rem;
+      line-height: 1.6;
+      max-width: 100%;
+    }
+
+    .code-body {
+      padding: 1rem;
+      font-size: 0.72rem;
+      line-height: 1.65;
+    }
+
+    .shape-count-label strong {
+      font-size: 2.6rem;
+    }
+
+    .shapes-grid {
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+    }
+
+    .footer-meta {
+      letter-spacing: 0.08em;
+      font-size: 0.6rem;
+      line-height: 1.6;
+    }
   }
