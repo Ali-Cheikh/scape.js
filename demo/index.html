@@ -715,56 +715,51 @@
 <!-- Toast -->
 <div class="toast" id="toast"></div>
 
-<script src="https://scape-js.vercel.app/scape.js"></script>
+<script src="../scape.js"></script>
 <script src="config.js"></script>
 
 <script>
-// ── PRESETS ──
-const PRESETS = [
-  {
-    name: 'Stars (default)', tag: 'shape',
-    config: { type:'shape', shape:'star', count:20, size:30, spacing:200, fillColor:'hsla(214,95%,70%,0.55)', strokeColor:'rgba(255,255,255,0.12)', strokeWidth:1.5, animationDuration:'6s', floatDistance:18, rotationRange:180, opacity:0.8 }
-  },
-  {
-    name: 'Hearts', tag: 'shape',
-    config: { type:'shape', shape:'heart', count:25, size:28, spacing:160, fillColor:'hsla(340,90%,65%,0.5)', strokeColor:'rgba(255,100,150,0.2)', strokeWidth:1, animationDuration:'5s', floatDistance:22, rotationRange:15, opacity:0.85 }
-  },
-  {
-    name: 'Hexagons', tag: 'shape',
-    config: { type:'shape', shape:'hexagon', count:18, size:36, spacing:220, fillColor:'hsla(170,80%,45%,0.2)', strokeColor:'hsla(170,80%,60%,0.4)', strokeWidth:2, animationDuration:'8s', floatDistance:12, rotationRange:60, opacity:0.9 }
-  },
-  {
-    name: 'Triangles', tag: 'shape',
-    config: { type:'shape', shape:'triangle', count:30, size:22, spacing:150, fillColor:'hsla(280,85%,65%,0.25)', strokeColor:'hsla(280,85%,75%,0.5)', strokeWidth:1.5, animationDuration:'7s', floatDistance:20, rotationRange:360, opacity:0.8 }
-  },
-  {
-    name: 'Diamonds', tag: 'shape',
-    config: { type:'shape', shape:'diamond', count:22, size:26, spacing:180, fillColor:'hsla(45,100%,60%,0.3)', strokeColor:'rgba(255,220,100,0.4)', strokeWidth:1.5, animationDuration:'6s', floatDistance:15, rotationRange:45, opacity:0.85 }
-  },
-  {
-    name: 'Circles', tag: 'shape',
-    config: { type:'shape', shape:'circle', count:35, size:18, spacing:130, fillColor:'rgba(99,102,241,0.2)', strokeColor:'rgba(139,143,255,0.4)', strokeWidth:1, animationDuration:'9s', floatDistance:25, rotationRange:0, opacity:0.75 }
-  },
-  {
-    name: 'Snowflakes', tag: 'shape',
-    config: { type:'shape', shape:'snowflake', count:15, size:40, spacing:250, fillColor:'hsla(200,90%,55%,0.15)', strokeColor:'hsla(200,90%,70%,0.35)', strokeWidth:2, animationDuration:'10s', floatDistance:10, rotationRange:90, opacity:0.9 }
-  },
-  {
-    name: 'Clovers', tag: 'shape',
-    config: { type:'shape', shape:'clover', count:28, size:20, spacing:170, fillColor:'rgba(255,80,80,0.18)', strokeColor:'rgba(255,120,120,0.35)', strokeWidth:1.5, animationDuration:'7s', floatDistance:16, rotationRange:90, opacity:0.8 }
-  },
-  {
-    name: 'Dense Stars', tag: 'dense',
-    config: { type:'shape', shape:'star', count:60, size:14, spacing:80, fillColor:'hsla(55,100%,65%,0.35)', strokeColor:'rgba(255,240,100,0.15)', strokeWidth:1, animationDuration:'4s', floatDistance:10, rotationRange:360, opacity:0.9 }
-  },
-  {
-    name: 'Slow Giants', tag: 'ambient',
-    config: { type:'shape', shape:'hexagon', count:8, size:80, spacing:350, fillColor:'rgba(99,102,241,0.06)', strokeColor:'rgba(139,143,255,0.15)', strokeWidth:1, animationDuration:'18s', floatDistance:30, rotationRange:20, opacity:0.95 }
-  },
-];
+const FALLBACK_SHAPES = ['circle','hexagon','heart','diamond','star','triangle','pentagon','fly','snowflake','flower','spiral','splash','tesseract','boom','wave','clover','ripple','shell','fractal'];
+let SUPPORTED_SHAPES = [...FALLBACK_SHAPES];
 
-// ── SHAPES for random generator ──
-const RAND_SHAPES = ['star','heart','hexagon','triangle','diamond','circle','pentagon','fly','flower','spiral','splash','tesseract','boom','wave','clover','ripple','shell','fractal','snowflake'];
+function uniqueLowercase(items) {
+  return [...new Set(items.map((item) => String(item).trim().toLowerCase()).filter(Boolean))];
+}
+
+function titleCase(value) {
+  const normalized = String(value || '');
+  return normalized.charAt(0).toUpperCase() + normalized.slice(1);
+}
+
+function parseShapesFromScapeSource(source) {
+  const commentMatch = source.match(/shape:\s*"[^"]+",\s*\/\/\s*Shape type\s*\(([^)]+)\)/i);
+  if (commentMatch && commentMatch[1]) {
+    const fromComment = uniqueLowercase(commentMatch[1].split(','));
+    if (fromComment.length) return fromComment;
+  }
+
+  const fromCases = uniqueLowercase([...source.matchAll(/case\s+"([a-z]+)"/gi)].map((m) => m[1]));
+  if (fromCases.length) return fromCases;
+
+  return [];
+}
+
+async function loadSupportedShapesFromScape() {
+  try {
+    const response = await fetch('../scape.js', { cache: 'no-store' });
+    if (!response.ok) return;
+    const source = await response.text();
+    const parsedShapes = parseShapesFromScapeSource(source);
+    if (parsedShapes.length) {
+      SUPPORTED_SHAPES = parsedShapes;
+    }
+  } catch (error) {
+    console.warn('Could not load shapes from scape.js, using fallback list.', error);
+  }
+}
+
+const DEFAULT_SHAPE = 'star';
+
 const RAND_PALETTES = [
   { fill:'hsla(214,95%,70%,0.5)', stroke:'rgba(100,180,255,0.25)' },
   { fill:'hsla(340,90%,65%,0.45)', stroke:'rgba(255,100,150,0.2)' },
@@ -776,6 +771,35 @@ const RAND_PALETTES = [
   { fill:'hsla(120,75%,55%,0.3)', stroke:'rgba(100,220,100,0.25)' },
   { fill:'rgba(200,255,0,0.25)', stroke:'rgba(180,255,0,0.2)' },
 ];
+
+let PRESETS = [];
+let RAND_SHAPES = [...SUPPORTED_SHAPES];
+
+function createShapePreset(shape, index) {
+  const palette = RAND_PALETTES[index % RAND_PALETTES.length];
+  return {
+    name: titleCase(shape),
+    tag: 'shape',
+    config: {
+      type: 'shape',
+      shape,
+      count: 16 + (index % 6) * 4,
+      size: 18 + (index % 5) * 4,
+      spacing: 140 + (index % 5) * 25,
+      fillColor: palette.fill,
+      strokeColor: palette.stroke,
+      strokeWidth: 1 + (index % 2),
+      animationDuration: `${4 + (index % 7)}s`,
+      floatDistance: 10 + (index % 6) * 3,
+      rotationRange: [0, 15, 45, 90, 180, 360][index % 6],
+      opacity: 0.82,
+    }
+  };
+}
+
+function rebuildShapePresets() {
+  PRESETS = SUPPORTED_SHAPES.map((shape, index) => createShapePreset(shape, index));
+}
 
 function randomConfig() {
   const shape = RAND_SHAPES[Math.floor(Math.random() * RAND_SHAPES.length)];
@@ -898,7 +922,11 @@ function closeConfigTab(tabId) {
 
 // ── INIT CODEMIRROR ──
 let editor;
-document.addEventListener('DOMContentLoaded', () => {
+document.addEventListener('DOMContentLoaded', async () => {
+  await loadSupportedShapesFromScape();
+  rebuildShapePresets();
+  RAND_SHAPES = [...SUPPORTED_SHAPES];
+
   const split = document.querySelector('.split');
   const closeEditorBtn = document.getElementById('closeEditorBtn');
   const openEditorBtn = document.getElementById('openEditorBtn');
@@ -941,9 +969,12 @@ document.addEventListener('DOMContentLoaded', () => {
 
   // Build presets list
   const list = document.getElementById('presetsList');
+  const hasDefaultShapePreset = PRESETS.some((preset) => preset.config.shape === DEFAULT_SHAPE);
   PRESETS.forEach((p, i) => {
     const item = document.createElement('div');
-    item.className = 'preset-item' + (i === 0 ? ' active' : '');
+    const isDefaultPreset = p.config.shape === DEFAULT_SHAPE || (!hasDefaultShapePreset && i === 0);
+    item.className = 'preset-item' + (isDefaultPreset ? ' active' : '');
+    item.dataset.shape = p.config.shape;
     item.innerHTML = `<span class="preset-name">${p.name}</span><span class="preset-tag">${p.tag}</span>`;
     item.addEventListener('click', () => {
       document.querySelectorAll('.preset-item').forEach(el => el.classList.remove('active'));
@@ -1013,7 +1044,8 @@ document.getElementById('resetBtn').addEventListener('click', () => {
   editor.setValue(DEFAULT_CONFIG);
   runConfig();
   document.querySelectorAll('.preset-item').forEach((el, i) => {
-    el.classList.toggle('active', i === 0);
+    const fallbackFirst = i === 0 && !PRESETS.some((preset) => preset.config.shape === DEFAULT_SHAPE);
+    el.classList.toggle('active', el.dataset.shape === DEFAULT_SHAPE || fallbackFirst);
   });
 });
 

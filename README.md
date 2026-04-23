@@ -297,7 +297,7 @@ document.addEventListener('DOMContentLoaded', () => {
    - Consider disabling rotation on low-end devices
 
 3. **Memory Management**
-   - Always use `Scape.destroy()` before page unload
+    - Always use `ScapeJs.destroy()` before page unload
    - Clean up event listeners when removing elements
    - Use appropriate spacing values
 
