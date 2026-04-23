@@ -4,7 +4,7 @@ const ScapeJs = (function () {
   const defaultConfig = {
     type: "image", // 'image' or 'shape'
     imageUrl: githubImg, // URL for the image
-    shape: "heart", // Shape type (circle, hexagon, heart, diamond, star, triangle, pentagon, fly, flower, spiral, splash, tesseract, boom, wave, clover, ripple, shell, fractal)
+    shape: "heart", // Shape type (circle, hexagon, heart, diamond, star, triangle, pentagon, fly, snowflake, flower, spiral, splash, tesseract, boom, wave, clover, ripple, shell, fractal)
     count: 30, // Number of elements
     size: 50, // Size of each element
     spacing: 200, // Spacing between elements

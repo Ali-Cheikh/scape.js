@@ -231,7 +231,7 @@
           <h2 class="api-heading">Control at<br />runtime.</h2>
           <p class="how-desc">
             Every method is available on the global <code
-              style="color:var(--acid);font-family:'IBM Plex Mono',monospace;font-size:0.85em">Scape</code> object.
+              style="color:var(--acid);font-family:'IBM Plex Mono',monospace;font-size:0.85em">ScapeJs</code> object.
             Call them after DOMContentLoaded.
           </p>
           <div class="code-panel" style="margin-top:2rem">
@@ -245,14 +245,14 @@
               <span class="n">document</span>.<span class="k">addEventListener</span>(<span
                 class="s">'DOMContentLoaded'</span>, () <span class="p">=></span> {<br /><br />
               &nbsp;&nbsp;<span class="c">// Swap to hearts on a button click</span><br />
-              &nbsp;&nbsp;<span class="n">Scape</span>.<span class="k">updateConfig</span>({ <span
+              &nbsp;&nbsp;<span class="n">ScapeJs</span>.<span class="k">updateConfig</span>({ <span
                 class="n">shape</span><span class="p">:</span> <span class="s">'heart'</span> });<br /><br />
               &nbsp;&nbsp;<span class="c">// Pause on modal open</span><br />
-              &nbsp;&nbsp;<span class="n">Scape</span>.<span class="k">pause</span>();<br /><br />
+              &nbsp;&nbsp;<span class="n">ScapeJs</span>.<span class="k">pause</span>();<br /><br />
               &nbsp;&nbsp;<span class="c">// Resume on modal close</span><br />
-              &nbsp;&nbsp;<span class="n">Scape</span>.<span class="k">resume</span>();<br /><br />
+              &nbsp;&nbsp;<span class="n">ScapeJs</span>.<span class="k">resume</span>();<br /><br />
               &nbsp;&nbsp;<span class="c">// Swap background image</span><br />
-              &nbsp;&nbsp;<span class="n">Scape</span>.<span class="k">setImage</span>(<span
+              &nbsp;&nbsp;<span class="n">ScapeJs</span>.<span class="k">setImage</span>(<span
                 class="s">'logo.png'</span>);<br /><br />
               });
             </div>
@@ -262,27 +262,27 @@
         <div>
           <div class="method-list">
             <div class="method-item">
-              <div class="method-name">Scape.refresh()</div>
+              <div class="method-name">ScapeJs.refresh()</div>
               <div class="method-desc">Regenerates the background</div>
             </div>
             <div class="method-item">
-              <div class="method-name">Scape.updateConfig(obj)</div>
+              <div class="method-name">ScapeJs.updateConfig(obj)</div>
               <div class="method-desc">Merges config and re-renders</div>
             </div>
             <div class="method-item">
-              <div class="method-name">Scape.destroy()</div>
+              <div class="method-name">ScapeJs.destroy()</div>
               <div class="method-desc">Removes all mounted nodes</div>
             </div>
             <div class="method-item">
-              <div class="method-name">Scape.setImage(url)</div>
+              <div class="method-name">ScapeJs.setImage(url)</div>
               <div class="method-desc">Swaps image at runtime</div>
             </div>
             <div class="method-item">
-              <div class="method-name">Scape.pause()</div>
+              <div class="method-name">ScapeJs.pause()</div>
               <div class="method-desc">Freezes all animations</div>
             </div>
             <div class="method-item">
-              <div class="method-name">Scape.resume()</div>
+              <div class="method-name">ScapeJs.resume()</div>
               <div class="method-desc">Restores animation playback</div>
             </div>
           </div>
