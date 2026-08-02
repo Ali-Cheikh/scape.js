@@ -60,7 +60,9 @@ const ScapeJs = (function () {
       element.appendChild(polygon);
     }
 
-    const rotationValue = Math.floor(Math.random() * config.rotationRange);
+    const rotationValue = Number.isFinite(rotation)
+      ? rotation
+      : Math.floor(Math.random() * config.rotationRange);
     element.style.zIndex = -1; // Ensure shapes appear behind the content
     element.style.position = "fixed"; // Fix elements to the viewport
     element.style.width = `${config.size}px`;
@@ -68,15 +70,12 @@ const ScapeJs = (function () {
     element.style.left = `${x}px`;
     element.style.top = `${y}px`;
     element.style.opacity = config.opacity;
-    element.style.transition = `transform ${config.animationDuration}s ease, opacity ${config.animationDuration}s ease`;
-    element.style.animation = `float ${config.animationDuration} infinite ease-in-out ${Math.random() * 2}s`;
+    const animationDuration = normalizeAnimationDuration(config.animationDuration);
+    element.style.transition = `transform ${animationDuration} ease, opacity ${animationDuration} ease`;
+    element.style.animation = `float ${animationDuration} infinite ease-in-out ${Math.random() * 2}s`;
     element.style.setProperty("--rotation", `${rotationValue}deg`);
     element.classList.add("background-element"); // Add a class for easy removal
-
-    // Enable interactions if onClick or onHover is provided
-    if (config.onClick || config.onHover) {
-      element.style.pointerEvents = "auto";
-    }
+    element.style.pointerEvents = config.onClick || config.onHover ? "auto" : "none";
 
     // Add event listeners if callbacks are provided
     if (config.onClick) {
@@ -325,6 +324,18 @@ const ScapeJs = (function () {
     if (attempts < 10) {
       existingPositions.push({ x, y });
       return { x, y };
+    }
+
+    // Normalize animation duration into a valid CSS time value
+    function normalizeAnimationDuration(duration) {
+      if (typeof duration === "number" && Number.isFinite(duration)) {
+        return `${duration}s`;
+      }
+
+      const value = String(duration ?? "").trim();
+      if (!value) return "3s";
+      if (/^[\d.]+$/.test(value)) return `${value}s`;
+      return value;
     }
     return null;
   }
