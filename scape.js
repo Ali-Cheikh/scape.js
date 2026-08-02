@@ -24,6 +24,22 @@ const ScapeJs = (function () {
   // Merge with defaults, ensuring window.ScapeConfig is an object/called
   let config = { ...defaultConfig, ...(window.ScapeConfig || {}) };
 
+  // Normalize animation duration into a valid CSS time value
+  function normalizeAnimationDuration(duration) {
+    if (typeof duration === "number" && Number.isFinite(duration)) {
+      return `${duration}s`;
+    }
+
+    const value = String(duration ?? "").trim();
+    if (!value) return "3s";
+    if (/^[\d.]+$/.test(value)) return `${value}s`;
+
+    const duplicateSecondsMatch = value.match(/^([\d.]+)s+$/i);
+    if (duplicateSecondsMatch) return `${duplicateSecondsMatch[1]}s`;
+
+    return value;
+  }
+
   // Function to dynamically create the @keyframes animation
   function setupKeyframeAnimation() {
     if (!document.getElementById("scapejs-keyframes")) {
@@ -326,17 +342,6 @@ const ScapeJs = (function () {
       return { x, y };
     }
 
-    // Normalize animation duration into a valid CSS time value
-    function normalizeAnimationDuration(duration) {
-      if (typeof duration === "number" && Number.isFinite(duration)) {
-        return `${duration}s`;
-      }
-
-      const value = String(duration ?? "").trim();
-      if (!value) return "3s";
-      if (/^[\d.]+$/.test(value)) return `${value}s`;
-      return value;
-    }
     return null;
   }
 
