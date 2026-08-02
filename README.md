@@ -315,6 +315,7 @@ If elements don't appear:
 5. Check image URLs for image type
 
 ## Version History
+- v1.0.2: Version update
 - v1.0.1: Added new shapes, improved performance
 - v1.0.0: Initial release
 For detailed configuration options, see the [documentation](Documentation.md).
