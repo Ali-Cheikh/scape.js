@@ -3,7 +3,7 @@
 
 > **Turn your website into a visual masterpiece with animated backgrounds**
 
-**Version:** 1.0.1 | **License:** MIT | **Size:** ~5KB
+**Version:** 1.0.2 | **License:** MIT | **Size:** ~5KB
 
 ---
 
